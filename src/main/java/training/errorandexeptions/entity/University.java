@@ -8,16 +8,56 @@ import java.util.Objects;
 public class University {
     private String name;
     private String info;
-    private List<Faculty> facultyList = new ArrayList<>();
+    private List<Student> studentList;
+    private List<Faculty> facultyList;
+    private List<Subject> subjectList;
+    private List<Group> groupList;
 
-    public University(Faculty... faculties) {
+    public University(String name, String info, Faculty ... faculties) {
         this.name = name;
         this.info = info;
+        facultyList = new ArrayList<>();
         facultyList.addAll(Arrays.asList(faculties));
+        studentList = new ArrayList<>();
+        subjectList = new ArrayList<>();
+        groupList = new ArrayList<>();
     }
 
-    public Faculty[] getFaculties() {
-        return facultyList.toArray(new Faculty[0]);
+
+    public List<Faculty> getFaculties() {
+        return facultyList;
+    }
+
+    public void addFaculty(Faculty faculty) {
+        facultyList.add(faculty);
+    }
+
+    public void deleteFaculty(Faculty faculty) {
+        facultyList.remove(faculty);
+    }
+
+    public void addStudents(Student... students) {
+        studentList.addAll(Arrays.asList(students));
+    }
+
+    public void deleteStudents(Student... students) {
+        studentList.removeAll(Arrays.asList(students));
+    }
+
+    public void addSubjects(Subject... subjects) {
+        subjectList.addAll(Arrays.asList(subjects));
+    }
+
+    public void deleteSubjects(Subject... subjects) {
+        subjectList.removeAll(Arrays.asList(subjects));
+    }
+
+    public void addGroups(Group... groups) {
+        groupList.addAll(Arrays.asList(groups));
+    }
+
+    public void deleteGroups(Group... groups) {
+        groupList.removeAll(Arrays.asList(groups));
     }
 
     public String getName() {
@@ -43,12 +83,15 @@ public class University {
         University that = (University) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(info, that.info) &&
-                Objects.equals(facultyList, that.facultyList);
+                Objects.equals(studentList, that.studentList) &&
+                Objects.equals(facultyList, that.facultyList) &&
+                Objects.equals(subjectList, that.subjectList) &&
+                Objects.equals(groupList, that.groupList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, info, facultyList);
+        return Objects.hash(name, info, studentList, facultyList, subjectList, groupList);
     }
 
     @Override
@@ -56,7 +99,11 @@ public class University {
         return "University{" +
                 "name='" + name + '\'' +
                 ", info='" + info + '\'' +
+                ", studentList=" + studentList +
                 ", facultyList=" + facultyList +
+                ", subjectList=" + subjectList +
+                ", groupList=" + groupList +
                 '}';
     }
 }
+

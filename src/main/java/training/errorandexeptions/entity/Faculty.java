@@ -1,39 +1,16 @@
 package training.errorandexeptions.entity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class Faculty {
     private String name;
-    private List<Group> groupList = new ArrayList<>();
+    private List<Subject> subjectList;
 
-    public Faculty(String name, Group... groups) {
+    public Faculty(String name, Subject... subjectList) {
         this.name = name;
-        groupList.addAll(Arrays.asList(groups));
-    }
-
-    public Group[] getGroups() {
-        return groupList.toArray(new Group[0]);
-    }
-
-    public Group getGroupByName(String name) {
-        // TODO: 06.05.2020 check null 
-        for (Group group : groupList) {
-            if (group.getName().equals(name)) {
-                return group;
-            }
-        }
-        return null; // TODO: 06.05.2020 return exceptions 
-    }
-
-    public void addGroup(Group group) {
-        groupList.add(group);
-    }
-
-    public void deleteGroup(Group group) {
-        groupList.remove(group);
+        this.subjectList = Arrays.asList(subjectList);
     }
 
     public String getName() {
@@ -44,25 +21,37 @@ public class Faculty {
         this.name = name;
     }
 
+    public List<Subject> getSubjectList() {
+        return subjectList;
+    }
+
+    public void addSubjects(Subject... subjects) {
+        subjectList.addAll(Arrays.asList(subjects));
+    }
+
+    public void deleteSubjects(Subject... subjects) {
+        subjectList.removeAll(Arrays.asList(subjects));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
         return Objects.equals(name, faculty.name) &&
-                Objects.equals(groupList, faculty.groupList);
+                Objects.equals(subjectList, faculty.subjectList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, groupList);
+        return Objects.hash(name, subjectList);
     }
 
     @Override
     public String toString() {
         return "Faculty{" +
                 "name='" + name + '\'' +
-                ", groupList=" + groupList +
+                ", subjectList=" + subjectList +
                 '}';
     }
 }
