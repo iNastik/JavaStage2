@@ -2,10 +2,7 @@ package training.errorandexeptions.repository;
 
 import training.errorandexeptions.entity.Faculty;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FacultyRepository {
     private Map<String, Faculty> facultyMap;
@@ -14,18 +11,31 @@ public class FacultyRepository {
         facultyMap = new HashMap<>();
     }
 
-    public void addFaculty(String facultyName, Faculty faculty) {
-        if (facultyMap.containsKey(facultyName)) {
-            // TODO: 02.06.2020 throws exceptions
+    public void add(Faculty faculty) throws IllegalArgumentException, NoSuchElementException {
+        if (faculty == null) {
+            throw new IllegalArgumentException("faculty can't be null");
+        }
+        String facultyName = faculty.getName();
+        if (!facultyMap.containsKey(facultyName)) {
+            throw new NoSuchElementException("Map doesn't contain such faculty name");
         }
         facultyMap.put(facultyName, faculty);
     }
 
-    public void deleteFaculty(String facultyName) {
-        facultyMap.remove(facultyName);
+    public void delete(String facultyName) {
+        if (facultyName != null && !facultyName.isEmpty()) {
+            facultyMap.remove(facultyName);
+        }
     }
 
-    public Faculty[] getFacultiesByNames(String... facultyNames) {
+    public Faculty getByName(String facultyName) throws IllegalArgumentException {
+        if (facultyName == null) {
+            throw new IllegalArgumentException("name can't be null");
+        }
+        return facultyMap.get(facultyName);
+    }
+
+    public Faculty[] getByNames(String... facultyNames) {
         List<Faculty> faculties = new ArrayList<>();
         for (String facultyName : facultyNames) {
             Faculty faculty = facultyMap.get(facultyName);
@@ -36,7 +46,17 @@ public class FacultyRepository {
         return faculties.toArray(new Faculty[0]);
     }
 
-    public Object[] getAllFaculties() {
-        return facultyMap.values().toArray();
+    public Faculty[] getAll() {
+        return facultyMap.values().toArray(new Faculty[0]);
+    }
+
+    public void update(Faculty faculty) throws IllegalArgumentException {
+        if (faculty == null) {
+            throw new IllegalArgumentException("faculty can't be null");
+        }
+        String facultyName = faculty.getName();
+        if (facultyMap.containsKey(facultyName)) {
+            facultyMap.put(facultyName, faculty);
+        }
     }
 }

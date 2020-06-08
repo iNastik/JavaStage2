@@ -23,7 +23,6 @@ public class University {
         groupList = new ArrayList<>();
     }
 
-
     public List<Faculty> getFaculties() {
         return facultyList;
     }

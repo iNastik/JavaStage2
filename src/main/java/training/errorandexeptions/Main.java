@@ -1,76 +1,77 @@
 package training.errorandexeptions;
 
 import training.errorandexeptions.entity.*;
+import training.errorandexeptions.repository.*;
 
 public class Main {
+    UniversityRepository universityRepository = new UniversityRepository();
+    FacultyRepository facultyRepository = new FacultyRepository();
+    StudentRepository studentRepository = new StudentRepository();
+    SubjectRepository subjectRepository = new SubjectRepository();
+    GroupRepository groupRepository = new GroupRepository();
 
     public static void main(String[] args) {
-        University bsaaUniversity = new University("Belarusian State Academy of Arts",
-                "Art, science and culture.", initBsaaFaculties());
 
-        bsaaUniversity.addStudents(initBsaaStudents());
-        bsaaUniversity.addSubjects(initBsaaSubjects());
-        bsaaUniversity.addGroups(initBsaaGroups());
     }
 
-    private static Student[] initBsaaStudents() {
-        return new Student[]{
-                new Student("Hohlova", "Alina"),
-                new Student("Rogova", "Irina"),
-                new Student("Orlov", "Denis"),
-                new Student("Pirogova", "Anna"),
-                new Student("Kot", "Alina"),
-                new Student("Minin", "Viktor"),
-                new Student("Popov", "Lev"),
-                new Student("Kolos", "Inna"),
-                new Student("Dom", "Kirill"),
-                new Student("Losik", "Vitali"),
-                new Student("Gordova", "LiLia"),
-                new Student("Malik", "Tatiana"),
-                new Student("Reh", "Helena"),
-                new Student("Zolotova", "Arina"),
-                new Student("Tik", "Faina"),
-                new Student("Repin", "Igor"),
-                new Student("Lim", "Kim"),
-                new Student("Luk", "Natalia"),
-                new Student("Korobov", "Pavel"),
-                new Student("Saharov", "Anton"),
-                new Student("Babina", "Margarita")
-        };
+    private void initUniversities() {
+        universityRepository.add(new University("Belarusian State Academy of Arts",
+                "Art, science and culture.", facultyRepository.getAll()));
     }
 
-    private static Subject[] initBsaaSubjects() {
-        return new Subject[]{
-                new Subject("Painting"),
-                new Subject("Acting"),
-                new Subject("Economic"),
-                new Subject("Decorative art"),
-                new Subject("Design"),
-                new Subject("Sculpture"),
-                new Subject("Psychology")
-        };
+    private void initStudents() {
+        studentRepository.add(new Student(40471, "Hohlova", "Alina"));
+        studentRepository.add(new Student(40472, "Rogova", "Irina"));
+        studentRepository.add(new Student(40473, "Orlov", "Denis"));
+        studentRepository.add(new Student(40475, "Pirogova", "Anna"));
+        studentRepository.add(new Student(40479, "Kot", "Alina"));
+        studentRepository.add(new Student(40480, "Minin", "Viktor"));
+        studentRepository.add(new Student(40481, "Popov", "Lev"));
+        studentRepository.add(new Student(40483, "Kolos", "Inna"));
+        studentRepository.add(new Student(40484, "Dom", "Kirill"));
+        studentRepository.add(new Student(40485, "Losik", "Vitali"));
+        studentRepository.add(new Student(40486, "Gordova", "LiLia"));
+        studentRepository.add(new Student(40487, "Malik", "Tatiana"));
+        studentRepository.add(new Student(40488, "Reh", "Helena"));
+        studentRepository.add(new Student(40489, "Zolotova", "Arina"));
+        studentRepository.add(new Student(40490, "Tik", "Faina"));
+        studentRepository.add(new Student(40491, "Repin", "Igor"));
+        studentRepository.add(new Student(40492, "Lim", "Kim"));
+        studentRepository.add(new Student(40493, "Luk", "Natalia"));
+        studentRepository.add(new Student(40494, "Korobov", "Pavel"));
+        studentRepository.add(new Student(40495, "Saharov", "Anton"));
+        studentRepository.add(new Student(40497, "Babina", "Margarita"));
     }
 
-    private static Faculty[] initBsaaFaculties(Subject[] subjects) {
-        return new Faculty[]{
-                new Faculty("Theatre", subjects[1], subjects[2], subjects[6]),
-                new Faculty("Art", subjects[1], subjects[2], subjects[3], subjects[6]),
-                new Faculty("Design", subjects[0], subjects[2], subjects[4], subjects[5])
-        };
+    private void initSubjects() {
+        subjectRepository.add(new Subject("Painting"));
+        subjectRepository.add(new Subject("Acting"));
+        subjectRepository.add(new Subject("Economic"));
+        subjectRepository.add(new Subject("Decorative art"));
+        subjectRepository.add(new Subject("Design"));
+        subjectRepository.add(new Subject("Sculpture"));
+        subjectRepository.add(new Subject("Psychology"));
     }
 
-    private static Group[] initBsaaGroups(Faculty faculty) {
-        return new Group[]{
-                new Group("24"),
-                new Group("26"),
-                new Group("27"),
-                new Group("33"),
-                new Group("35"),
-                new Group("38"),
-                new Group("42"),
-                new Group("44"),
-                new Group("45")
-        };
+    private void initFaculties() {
+        facultyRepository.add(new Faculty("Theatre", subjectRepository.getByNames(
+                "Acting", "Economic", "Psychology")));
+        facultyRepository.add(new Faculty("Art", subjectRepository.getByNames(
+                "Painting", "Economic", "Decorative art", "Sculpture")));
+        facultyRepository.add(new Faculty("Design", subjectRepository.getByNames(
+                "Painting", "Economic", "Decorative art", "Design")));
+    }
+
+    private void initGroups() {
+        groupRepository.add(new Group("24", facultyRepository.getByName("Theatre")));
+        groupRepository.add(new Group("26", facultyRepository.getByName("Theatre")));
+        groupRepository.add(new Group("27", facultyRepository.getByName("Theatre")));
+        groupRepository.add(new Group("33", facultyRepository.getByName("Art")));
+        groupRepository.add(new Group("35", facultyRepository.getByName("Art")));
+        groupRepository.add(new Group("38", facultyRepository.getByName("Art")));
+        groupRepository.add(new Group("42", facultyRepository.getByName("Design")));
+        groupRepository.add(new Group("44", facultyRepository.getByName("Design")));
+        groupRepository.add(new Group("45", facultyRepository.getByName("Design")));
     }
 }
 

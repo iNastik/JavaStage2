@@ -40,4 +40,5 @@ public class Group {
                 ", faculty=" + faculty +
                 '}';
     }
+
 }

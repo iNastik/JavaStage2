@@ -1,11 +1,9 @@
 package training.errorandexeptions.repository;
 
+import training.errorandexeptions.entity.Faculty;
 import training.errorandexeptions.entity.Subject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SubjectRepository {
     Map<String, Subject> subjectMap;
@@ -14,18 +12,31 @@ public class SubjectRepository {
         subjectMap = new HashMap<>();
     }
 
-    public void addSubject(String subjectName, Subject subject) {
-        if (subjectMap.containsKey(subjectName)) {
-            // TODO: 03.06.2020 throws exceptions
+    public void add(Subject subject) throws IllegalArgumentException, NoSuchElementException{
+        if (subject == null) {
+            throw new IllegalArgumentException("subject can't be null");
+        }
+        String subjectName = subject.getName();
+        if (!subjectMap.containsKey(subjectName)) {
+            throw new NoSuchElementException("Map doesn't contain such subject name");
         }
         subjectMap.put(subjectName, subject);
     }
 
-    public void deleteSubject(String subjectName) {
-        subjectMap.remove(subjectName);
+    public void delete(String subjectName) {
+        if (subjectName != null && !subjectName.isEmpty()) {
+            subjectMap.remove(subjectName);
+        }
     }
 
-    public Subject[] getSubjectsByNames(String... subjectNames) {
+    public Subject getByName(String subjectName) throws IllegalArgumentException {
+        if (subjectName == null) {
+            throw new IllegalArgumentException("name can't be null");
+        }
+        return subjectMap.get(subjectName);
+    }
+
+    public Subject[] getByNames(String... subjectNames) {
         List<Subject> subjects = new ArrayList<>();
         for (String subjectName : subjectNames) {
             Subject subject = subjectMap.get(subjectName);
@@ -36,7 +47,17 @@ public class SubjectRepository {
         return subjects.toArray(new Subject[0]);
     }
 
-    public Subject[] getAllSubjects() {
+    public Subject[] getAll() {
         return subjectMap.values().toArray(new Subject[0]);
+    }
+
+    public void update(Subject subject) throws IllegalArgumentException {
+        if (subject == null) {
+            throw new IllegalArgumentException("subject can't be null");
+        }
+        String subjectName = subject.getName();
+        if (subjectMap.containsKey(subjectName)) {
+            subjectMap.put(subjectName, subject);
+        }
     }
 }

@@ -21,8 +21,8 @@ public class Faculty {
         this.name = name;
     }
 
-    public List<Subject> getSubjectList() {
-        return subjectList;
+    public Subject[] getSubjects() {
+        return subjectList.toArray(new Subject[0]);
     }
 
     public void addSubjects(Subject... subjects) {
