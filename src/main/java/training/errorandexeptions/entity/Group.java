@@ -2,43 +2,58 @@ package training.errorandexeptions.entity;
 
 import java.util.Objects;
 
-public class Group {
+public class Group implements Entity {
+    private int id;
     private String name;
-    private Faculty faculty;
+    private int facultyId;
 
-    public Group(String name, Faculty faculty) {
+    public Group(String name, Integer facultyId) {
         this.name = name;
-        this.faculty = faculty;
+        this.facultyId = facultyId;
     }
 
     public String getName() {
         return name;
     }
 
-    public Faculty getFaculty() {
-        return faculty;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getFacultyId() {
+        return facultyId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Group group = (Group) o;
-        return Objects.equals(name, group.name) &&
-                Objects.equals(faculty, group.faculty);
+        return id == group.id &&
+                facultyId == group.facultyId &&
+                Objects.equals(name, group.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, faculty);
+        return Objects.hash(id, name, facultyId);
     }
 
     @Override
     public String toString() {
         return "Group{" +
-                "name='" + name + '\'' +
-                ", faculty=" + faculty +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", facultyId=" + facultyId +
                 '}';
     }
-
 }

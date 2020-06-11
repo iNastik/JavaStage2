@@ -1,53 +1,88 @@
 package training.errorandexeptions.repository;
 
+import training.errorandexeptions.entity.Entity;
 import training.errorandexeptions.entity.Student;
+import training.errorandexeptions.exception.RepositoryException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class StudentRepository {
-    private Map<Integer, Student> studentMap;
+public class StudentRepository extends Repository {
 
     public StudentRepository() {
-        studentMap = new HashMap<>();
+        entityList = new ArrayList<>();
     }
 
-    public void add(Student student) throws IllegalArgumentException, NoSuchElementException {
+    public Student add(Student student) throws IllegalArgumentException {
         if (student == null) {
             throw new IllegalArgumentException("student can't be null");
         }
-        int cardId = student.getCardId();
-        if (!studentMap.containsKey(cardId)) {
-            throw new NoSuchElementException("Map doesn't contain such card ID");
+
+        student.setId(entityList.size());
+        entityList.add(student);
+        return student;
+    }
+
+    public void delete(int studentId) throws RepositoryException {
+        if (!checkId(studentId)) {
+            throw new RepositoryException("student with id " + studentId + " not found");
         }
-        studentMap.put(cardId, student);
+        entityList.set(studentId, null);
     }
 
-    public void delete(int cardId) {
-        studentMap.remove(cardId);
+    public Student getById(int studentId) throws RepositoryException {
+        if (!checkId(studentId)) {
+            throw new RepositoryException("student with id " + studentId + " not found");
+        }
+        return (Student) entityList.get(studentId);
     }
 
-    public Student[] getByCardIds(int... cardIds) {
+    public Student[] getByIds(int... studentIds) throws RepositoryException {
         List<Student> students = new ArrayList<>();
-        for (int cardId : cardIds) {
-            Student student = studentMap.get(cardId);
-            if (student != null) {
-                students.add(student);
+        for (int id : studentIds) {
+            if (checkId(id)) {
+                Student student = (Student) entityList.get(id);
+
+                if (student != null) {
+                    students.add(student);
+                }
             }
+        }
+
+        if (students.isEmpty()) {
+            throw new RepositoryException("such students not found");
         }
         return students.toArray(new Student[0]);
     }
 
-    public Student[] getAll() {
-        return studentMap.values().toArray(new Student[0]);
+    public Student[] getByGroupId(int groupId) {
+        List<Student> studentList = new ArrayList<>();
+        for (Entity entity : entityList) {
+            Student student = (Student) entity;
+            if (student.getGroupId() == groupId) {
+                studentList.add(student);
+            }
+        }
+        return studentList.toArray(new Student[0]);
     }
 
-    public void update(Student student) throws IllegalArgumentException{
+    public Student[] getByGroupIds(Integer... groupIds) {
+        List<Student> studentList = new ArrayList<>();
+        for (Integer id : groupIds) {
+            studentList.addAll(Arrays.asList(getByGroupId(id)));
+        }
+        return studentList.toArray(new Student[0]);
+    }
+
+    public void update(Student student) throws IllegalArgumentException, RepositoryException {
         if (student == null) {
             throw new IllegalArgumentException("student can't be null");
         }
-        int cardId = student.getCardId();
-        if (studentMap.containsKey(cardId)) {
-            studentMap.put(cardId, student);
+
+        if (!checkId(student.getId())) {
+            throw new RepositoryException("old student not found");
         }
+        entityList.set(student.getId(), student);
     }
 }

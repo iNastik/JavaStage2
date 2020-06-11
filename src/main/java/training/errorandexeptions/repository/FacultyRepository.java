@@ -1,62 +1,78 @@
 package training.errorandexeptions.repository;
 
+import training.errorandexeptions.entity.Entity;
 import training.errorandexeptions.entity.Faculty;
+import training.errorandexeptions.exception.RepositoryException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class FacultyRepository {
-    private Map<String, Faculty> facultyMap;
+public class FacultyRepository extends Repository {
 
     public FacultyRepository() {
-        facultyMap = new HashMap<>();
+        entityList = new ArrayList<>();
     }
 
-    public void add(Faculty faculty) throws IllegalArgumentException, NoSuchElementException {
+    public Faculty add(Faculty faculty) throws IllegalArgumentException {
         if (faculty == null) {
             throw new IllegalArgumentException("faculty can't be null");
         }
-        String facultyName = faculty.getName();
-        if (!facultyMap.containsKey(facultyName)) {
-            throw new NoSuchElementException("Map doesn't contain such faculty name");
-        }
-        facultyMap.put(facultyName, faculty);
+        faculty.setId(entityList.size());
+        entityList.add(faculty);
+        return faculty;
     }
 
-    public void delete(String facultyName) {
-        if (facultyName != null && !facultyName.isEmpty()) {
-            facultyMap.remove(facultyName);
+    public void delete(int facultyId) throws RepositoryException {
+        if (!checkId(facultyId)) {
+            throw new RepositoryException("faculty with id " + facultyId + " not found");
         }
+        entityList.set(facultyId, null);
     }
 
-    public Faculty getByName(String facultyName) throws IllegalArgumentException {
-        if (facultyName == null) {
-            throw new IllegalArgumentException("name can't be null");
+    public Faculty getById(int facultyId) throws RepositoryException {
+        if (!checkId(facultyId)) {
+            throw new RepositoryException("faculty with id " + facultyId + " not found");
         }
-        return facultyMap.get(facultyName);
+        return (Faculty) entityList.get(facultyId);
     }
 
-    public Faculty[] getByNames(String... facultyNames) {
+    public Faculty[] getByIds(int... facultyIds) throws RepositoryException {
         List<Faculty> faculties = new ArrayList<>();
-        for (String facultyName : facultyNames) {
-            Faculty faculty = facultyMap.get(facultyName);
-            if (faculty != null) {
-                faculties.add(faculty);
+
+        for (int id : facultyIds) {
+            if (checkId(id)) {
+                Faculty faculty = (Faculty) entityList.get(id);
+                if (faculty != null) {
+                    faculties.add(faculty);
+                }
             }
+        }
+
+        if (faculties.isEmpty()) {
+            throw new RepositoryException("such faculties not found");
         }
         return faculties.toArray(new Faculty[0]);
     }
 
-    public Faculty[] getAll() {
-        return facultyMap.values().toArray(new Faculty[0]);
+    public Faculty getByName(String name) {
+        Faculty faculty = null;
+        for (Entity entity : entityList) {
+            Faculty f = (Faculty) entity;
+            if (f.getName().equals(name)) {
+                faculty = f;
+            }
+        }
+        return faculty;
     }
 
-    public void update(Faculty faculty) throws IllegalArgumentException {
+    public void update(Faculty faculty) throws IllegalArgumentException, RepositoryException {
         if (faculty == null) {
             throw new IllegalArgumentException("faculty can't be null");
         }
-        String facultyName = faculty.getName();
-        if (facultyMap.containsKey(facultyName)) {
-            facultyMap.put(facultyName, faculty);
+
+        if (!checkId(faculty.getId())) {
+            throw new RepositoryException("old faculty not found");
         }
+        entityList.set(faculty.getId(), faculty);
     }
 }

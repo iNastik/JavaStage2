@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Student {
-    private int cardId;
+public class Student implements Entity {
+    private int id;
     private String name;
     private String surname;
-    private String groupName;
+    private int groupId;
     private List<Mark> markList;
 
-    public Student(int cardId, String surname, String name) {
-        this.cardId = cardId;
+    public Student(String surname, String name) {
         this.surname = surname;
         this.name = name;
         markList = new ArrayList<>();
@@ -22,8 +21,8 @@ public class Student {
         this.markList = markList;
     }
 
-    public List<Mark> getMarks() {
-        return markList;
+    public Mark[] getMarks() {
+        return markList.toArray(new Mark[0]);
     }
 
     public void addMark(Mark mark) {
@@ -46,20 +45,20 @@ public class Student {
         this.surname = surname;
     }
 
-    public int getCardId() {
-        return cardId;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setCardId(int cardId) {
-        this.cardId = cardId;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public int getId() {
+        return id;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -67,25 +66,23 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return cardId == student.cardId &&
-                Objects.equals(name, student.name) &&
+        return Objects.equals(name, student.name) &&
                 Objects.equals(surname, student.surname) &&
-                Objects.equals(groupName, student.groupName) &&
+                Objects.equals(groupId, student.groupId) &&
                 Objects.equals(markList, student.markList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cardId, name, surname, groupName, markList);
+        return Objects.hash(name, surname, groupId, markList);
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "cardId=" + cardId +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", groupName='" + groupName + '\'' +
+                ", groupName='" + groupId + '\'' +
                 ", markList=" + markList +
                 '}';
     }

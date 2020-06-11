@@ -2,7 +2,8 @@ package training.errorandexeptions.entity;
 
 import java.util.Objects;
 
-public class Subject {
+public class Subject implements Entity {
+    private int id;
     private String name;
 
     public Subject(String name) {
@@ -15,6 +16,14 @@ public class Subject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

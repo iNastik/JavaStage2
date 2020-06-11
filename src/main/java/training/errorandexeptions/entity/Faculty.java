@@ -1,16 +1,16 @@
 package training.errorandexeptions.entity;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public class Faculty {
+public class Faculty implements Entity {
+    private int id;
     private String name;
-    private List<Subject> subjectList;
+    private Set<Integer> subjectIdSet;
 
-    public Faculty(String name, Subject... subjectList) {
+    public Faculty(String name, Integer... subjectIds) {
+        addSubjects(subjectIds);
         this.name = name;
-        this.subjectList = Arrays.asList(subjectList);
+        this.subjectIdSet = new HashSet<>();
     }
 
     public String getName() {
@@ -21,16 +21,35 @@ public class Faculty {
         this.name = name;
     }
 
-    public Subject[] getSubjects() {
-        return subjectList.toArray(new Subject[0]);
+    public void addSubjects(Integer... subjectIds) {
+        for (Integer i : subjectIds) {
+            checkId(i);
+            subjectIdSet.add(i);
+        }
     }
 
-    public void addSubjects(Subject... subjects) {
-        subjectList.addAll(Arrays.asList(subjects));
+    public int[] getSubjectIds() {
+        int [] subjectIds = new int [subjectIdSet.size()];
+        Integer[] idsFromSet = subjectIdSet.toArray(new Integer[0]);
+
+        for (int i = 0; i < subjectIds.length; i++) {
+            subjectIds[i] = idsFromSet[i];
+        }
+        return subjectIds;
     }
 
-    public void deleteSubjects(Subject... subjects) {
-        subjectList.removeAll(Arrays.asList(subjects));
+    public void deleteSubjects(int... subjectIds) {
+        for (int id : subjectIds) {
+            subjectIdSet.remove(id);
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -38,20 +57,22 @@ public class Faculty {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return Objects.equals(name, faculty.name) &&
-                Objects.equals(subjectList, faculty.subjectList);
+        return id == faculty.id &&
+                Objects.equals(name, faculty.name) &&
+                Objects.equals(subjectIdSet, faculty.subjectIdSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, subjectList);
+        return Objects.hash(id, name, subjectIdSet);
     }
 
     @Override
     public String toString() {
         return "Faculty{" +
-                "name='" + name + '\'' +
-                ", subjectList=" + subjectList +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subjectIdSet=" + subjectIdSet +
                 '}';
     }
 }

@@ -1,56 +1,78 @@
 package training.errorandexeptions.repository;
 
 import training.errorandexeptions.entity.Group;
+import training.errorandexeptions.exception.RepositoryException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class GroupRepository {
-    private Map<String, Group> groupMap;
+public class GroupRepository extends Repository {
+    private List<Group> entityList;
 
     public GroupRepository() {
-        groupMap = new HashMap<>();
+        entityList = new ArrayList<>();
     }
 
-    public void add(Group group) throws IllegalArgumentException, NoSuchElementException {
+    public Group add(Group group) throws IllegalArgumentException {
         if (group == null) {
             throw new IllegalArgumentException("group can't be null");
         }
-        String groupName = group.getName();
-        if (!groupMap.containsKey(groupName)) {
-            throw new NoSuchElementException("Map doesn't contain such group name");
+
+        group.setId(entityList.size());
+        entityList.add(group);
+        return group;
+    }
+
+    public void delete(int groupId) throws RepositoryException {
+        if (!checkId(groupId)) {
+            throw new RepositoryException("group with id " + groupId + " not found");
         }
-        groupMap.put(groupName, group);
+        entityList.set(groupId, null);
     }
 
-    public void delete(String groupName) {
-        if (groupName != null && !groupName.isEmpty()) {
-            groupMap.remove(groupName);
+    public Group getById(int groupId) throws RepositoryException {
+        if (!checkId(groupId)) {
+            throw new RepositoryException("group with id " + groupId + " not found");
         }
+        return (Group) entityList.get(groupId);
     }
 
-    public Group[] getAll() {
-        return groupMap.values().toArray(new Group[0]);
-    }
-
-    public Group[] getByNames(String... groupNames) {
+    public Group[] getByIds(int... groupIds) throws RepositoryException {
         List<Group> groups = new ArrayList<>();
-        for (String groupName : groupNames) {
-            Group group = groupMap.get(groupName);
-            if (group != null) {
-                groups.add(group);
+        for (int id : groupIds) {
+            if (checkId(id)) {
+                Group group = entityList.get(id);
+
+                if (group != null) {
+                    groups.add(group);
+                }
             }
+        }
+
+        if (groups.isEmpty()) {
+            throw new RepositoryException("such groups not found");
         }
         return groups.toArray(new Group[0]);
     }
 
-    public void update(Group group) throws IllegalArgumentException, NoSuchElementException {
+    public Group[] getByFacultyId(int facultyId) {
+        List<Group> groupList = new ArrayList<>();
+        for (Group group : entityList) {
+            if (group.getFacultyId() == facultyId) {
+                groupList.add(group);
+            }
+        }
+        return groupList.toArray(new Group[0]);
+    }
+
+    public void update(Group group) throws IllegalArgumentException, RepositoryException {
         if (group == null) {
             throw new IllegalArgumentException("group can't be null");
         }
-        String groupName = group.getName();
-        if (!groupMap.containsKey(groupName)) {
-            throw new NoSuchElementException("Map doesn't contain such group name");
+
+        if (!checkId(group.getId())) {
+            throw new RepositoryException("old group not found");
         }
-        groupMap.put(groupName, group);
+        entityList.set(group.getId(), group);
     }
 }

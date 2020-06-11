@@ -1,62 +1,114 @@
 package training.errorandexeptions.entity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-public class University {
+public class University implements Entity {
+    private int id;
     private String name;
     private String info;
-    private List<Student> studentList;
-    private List<Faculty> facultyList;
-    private List<Subject> subjectList;
-    private List<Group> groupList;
+    private Set<Integer> studentIdSet;
+    private Set<Integer> facultyIdSet;
+    private Set<Integer> subjectIdSet;
+    private Set<Integer> groupIdSet;
 
-    public University(String name, String info, Faculty ... faculties) {
+    public University(String name, String info, Integer... facultyIds) {
         this.name = name;
         this.info = info;
-        facultyList = new ArrayList<>();
-        facultyList.addAll(Arrays.asList(faculties));
-        studentList = new ArrayList<>();
-        subjectList = new ArrayList<>();
-        groupList = new ArrayList<>();
+        facultyIdSet = new HashSet<>();
+        addFaculties(facultyIds);
+        studentIdSet = new HashSet<>();
+        subjectIdSet = new HashSet<>();
+        groupIdSet = new HashSet<>();
     }
 
-    public List<Faculty> getFaculties() {
-        return facultyList;
+    public int[] getFacultyIds() {
+        int [] facultyIds = new int [facultyIdSet.size()];
+        Integer[] idsFromSet = facultyIdSet.toArray(new Integer[0]);
+
+        for (int i = 0; i < facultyIds.length; i++) {
+            facultyIds[i] = idsFromSet[i];
+        }
+        return facultyIds;
     }
 
-    public void addFaculty(Faculty faculty) {
-        facultyList.add(faculty);
+    public void addFaculties(Integer... facultyIds) {
+        for (Integer id : facultyIds) {
+            checkId(id);
+            facultyIdSet.add(id);
+        }
     }
 
-    public void deleteFaculty(Faculty faculty) {
-        facultyList.remove(faculty);
+    public void deleteFaculty(int facultyId) {
+        facultyIdSet.remove(facultyId);
     }
 
-    public void addStudents(Student... students) {
-        studentList.addAll(Arrays.asList(students));
+    public int[] getStudentIds() {
+        int [] studentIds = new int [studentIdSet.size()];
+        Integer[] idsFromSet = studentIdSet.toArray(new Integer[0]);
+
+        for (int i = 0; i < studentIds.length; i++) {
+            studentIds[i] = idsFromSet[i];
+        }
+        return studentIds;
     }
 
-    public void deleteStudents(Student... students) {
-        studentList.removeAll(Arrays.asList(students));
+    public void addStudents(Integer... studentIds) {
+        for (Integer id : studentIds) {
+            checkId(id);
+            studentIdSet.add(id);
+        }
     }
 
-    public void addSubjects(Subject... subjects) {
-        subjectList.addAll(Arrays.asList(subjects));
+    public void deleteStudents(int... studentIds) {
+        for (int id : studentIds) {
+            studentIdSet.remove(id);
+        }
     }
 
-    public void deleteSubjects(Subject... subjects) {
-        subjectList.removeAll(Arrays.asList(subjects));
+    public int[] getSubjectIds() {
+        int [] subjectIds = new int [subjectIdSet.size()];
+        Integer[] idsFromSet = subjectIdSet.toArray(new Integer[0]);
+
+        for (int i = 0; i < subjectIds.length; i++) {
+            subjectIds[i] = idsFromSet[i];
+        }
+        return subjectIds;
     }
 
-    public void addGroups(Group... groups) {
-        groupList.addAll(Arrays.asList(groups));
+    public void addSubjects(Integer... subjectIds) {
+        for (Integer id : subjectIds) {
+            checkId(id);
+            subjectIdSet.add(id);
+        }
     }
 
-    public void deleteGroups(Group... groups) {
-        groupList.removeAll(Arrays.asList(groups));
+    public void deleteSubjects(int... subjectIds) {
+        for (int id : subjectIds) {
+            subjectIdSet.remove(id);
+        }
+    }
+
+    public int[] getGroupIds() {
+        int [] groupIds = new int [groupIdSet.size()];
+        Integer[] idsFromSet = groupIdSet.toArray(new Integer[0]);
+
+        for (int i = 0; i < groupIds.length; i++) {
+            groupIds[i] = idsFromSet[i];
+        }
+        return groupIds;
+    }
+
+    public void addGroups(Integer... groupIds) {
+        for (Integer id : groupIds) {
+            checkId(id);
+            groupIdSet.add(id);
+        }
+    }
+
+    public void deleteGroups(int... groupIds) {
+        for (int id : groupIds) {
+            groupIdSet.remove(id);
+        }
     }
 
     public String getName() {
@@ -75,33 +127,43 @@ public class University {
         this.info = info;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         University that = (University) o;
-        return Objects.equals(name, that.name) &&
+        return id == that.id &&
+                Objects.equals(name, that.name) &&
                 Objects.equals(info, that.info) &&
-                Objects.equals(studentList, that.studentList) &&
-                Objects.equals(facultyList, that.facultyList) &&
-                Objects.equals(subjectList, that.subjectList) &&
-                Objects.equals(groupList, that.groupList);
+                Objects.equals(studentIdSet, that.studentIdSet) &&
+                Objects.equals(facultyIdSet, that.facultyIdSet) &&
+                Objects.equals(subjectIdSet, that.subjectIdSet) &&
+                Objects.equals(groupIdSet, that.groupIdSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, info, studentList, facultyList, subjectList, groupList);
+        return Objects.hash(id, name, info, studentIdSet, facultyIdSet, subjectIdSet, groupIdSet);
     }
 
     @Override
     public String toString() {
         return "University{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", info='" + info + '\'' +
-                ", studentList=" + studentList +
-                ", facultyList=" + facultyList +
-                ", subjectList=" + subjectList +
-                ", groupList=" + groupList +
+                ", studentIdSet=" + studentIdSet +
+                ", facultyIdSet=" + facultyIdSet +
+                ", subjectIdSet=" + subjectIdSet +
+                ", groupIdSet=" + groupIdSet +
                 '}';
     }
 }
