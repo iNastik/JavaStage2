@@ -7,10 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupRepository extends Repository {
+    private static GroupRepository instance;
     private List<Group> entityList;
 
-    public GroupRepository() {
+    private GroupRepository() {
         entityList = new ArrayList<>();
+    }
+
+    public static GroupRepository getInstance() {
+        if (instance == null) {
+            instance = new GroupRepository();
+        }
+        return instance;
     }
 
     public Group add(Group group) throws IllegalArgumentException {
@@ -34,7 +42,7 @@ public class GroupRepository extends Repository {
         if (!checkId(groupId)) {
             throw new RepositoryException("group with id " + groupId + " not found");
         }
-        return (Group) entityList.get(groupId);
+        return entityList.get(groupId);
     }
 
     public Group[] getByIds(int... groupIds) throws RepositoryException {

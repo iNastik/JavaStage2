@@ -1,6 +1,8 @@
 package training.errorandexeptions.entity;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class University implements Entity {
     private int id;
@@ -8,7 +10,6 @@ public class University implements Entity {
     private String info;
     private Set<Integer> studentIdSet;
     private Set<Integer> facultyIdSet;
-    private Set<Integer> subjectIdSet;
     private Set<Integer> groupIdSet;
 
     public University(String name, String info, Integer... facultyIds) {
@@ -17,12 +18,11 @@ public class University implements Entity {
         facultyIdSet = new HashSet<>();
         addFaculties(facultyIds);
         studentIdSet = new HashSet<>();
-        subjectIdSet = new HashSet<>();
         groupIdSet = new HashSet<>();
     }
 
     public int[] getFacultyIds() {
-        int [] facultyIds = new int [facultyIdSet.size()];
+        int[] facultyIds = new int[facultyIdSet.size()];
         Integer[] idsFromSet = facultyIdSet.toArray(new Integer[0]);
 
         for (int i = 0; i < facultyIds.length; i++) {
@@ -43,7 +43,7 @@ public class University implements Entity {
     }
 
     public int[] getStudentIds() {
-        int [] studentIds = new int [studentIdSet.size()];
+        int[] studentIds = new int[studentIdSet.size()];
         Integer[] idsFromSet = studentIdSet.toArray(new Integer[0]);
 
         for (int i = 0; i < studentIds.length; i++) {
@@ -65,31 +65,8 @@ public class University implements Entity {
         }
     }
 
-    public int[] getSubjectIds() {
-        int [] subjectIds = new int [subjectIdSet.size()];
-        Integer[] idsFromSet = subjectIdSet.toArray(new Integer[0]);
-
-        for (int i = 0; i < subjectIds.length; i++) {
-            subjectIds[i] = idsFromSet[i];
-        }
-        return subjectIds;
-    }
-
-    public void addSubjects(Integer... subjectIds) {
-        for (Integer id : subjectIds) {
-            checkId(id);
-            subjectIdSet.add(id);
-        }
-    }
-
-    public void deleteSubjects(int... subjectIds) {
-        for (int id : subjectIds) {
-            subjectIdSet.remove(id);
-        }
-    }
-
     public int[] getGroupIds() {
-        int [] groupIds = new int [groupIdSet.size()];
+        int[] groupIds = new int[groupIdSet.size()];
         Integer[] idsFromSet = groupIdSet.toArray(new Integer[0]);
 
         for (int i = 0; i < groupIds.length; i++) {
@@ -145,13 +122,12 @@ public class University implements Entity {
                 Objects.equals(info, that.info) &&
                 Objects.equals(studentIdSet, that.studentIdSet) &&
                 Objects.equals(facultyIdSet, that.facultyIdSet) &&
-                Objects.equals(subjectIdSet, that.subjectIdSet) &&
                 Objects.equals(groupIdSet, that.groupIdSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, info, studentIdSet, facultyIdSet, subjectIdSet, groupIdSet);
+        return Objects.hash(id, name, info, studentIdSet, facultyIdSet, groupIdSet);
     }
 
     @Override
@@ -162,7 +138,6 @@ public class University implements Entity {
                 ", info='" + info + '\'' +
                 ", studentIdSet=" + studentIdSet +
                 ", facultyIdSet=" + facultyIdSet +
-                ", subjectIdSet=" + subjectIdSet +
                 ", groupIdSet=" + groupIdSet +
                 '}';
     }

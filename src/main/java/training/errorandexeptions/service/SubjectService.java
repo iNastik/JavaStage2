@@ -9,7 +9,7 @@ import training.errorandexeptions.exception.SubjectsNotFoundException;
 import training.errorandexeptions.repository.SubjectRepository;
 
 public class SubjectService {
-    private SubjectRepository subjectRepository = new SubjectRepository();
+    private SubjectRepository subjectRepository = SubjectRepository.getInstance();
     private StudentService studentService = new StudentService();
     private GroupService groupService = new GroupService();
     private FacultyService facultyService = new FacultyService();
@@ -32,6 +32,14 @@ public class SubjectService {
             throw new SubjectsNotFoundException("student subjects not found");
         }
         return subjectRepository.getByIds(subjectIds);
+    }
+
+    public Subject getById(int subjectId) throws RepositoryException, SubjectsNotFoundException {
+        Subject subject = subjectRepository.getById(subjectId);
+        if (subject == null) {
+            throw new SubjectsNotFoundException("subject with id " + subjectId + " not found");
+        }
+        return subject;
     }
 
     public Subject getByName(String name) throws SubjectsNotFoundException {

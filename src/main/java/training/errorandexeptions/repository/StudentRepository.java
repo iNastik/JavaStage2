@@ -9,9 +9,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StudentRepository extends Repository {
+    private static StudentRepository instance;
 
-    public StudentRepository() {
+    private StudentRepository() {
         entityList = new ArrayList<>();
+    }
+
+    public static StudentRepository getInstance() {
+        if (instance == null) {
+            instance = new StudentRepository();
+        }
+        return instance;
     }
 
     public Student add(Student student) throws IllegalArgumentException {

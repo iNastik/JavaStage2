@@ -7,9 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UniversityRepository extends Repository {
+    private static UniversityRepository instance;
 
-    public UniversityRepository() {
+    private UniversityRepository() {
         entityList = new ArrayList<>();
+    }
+
+    public static UniversityRepository getInstance() {
+        if (instance == null) {
+            instance = new UniversityRepository();
+        }
+        return instance;
     }
 
     public University add(University university) throws IllegalArgumentException {

@@ -5,7 +5,7 @@ import training.errorandexeptions.exception.RepositoryException;
 import training.errorandexeptions.repository.UniversityRepository;
 
 public class UniversityService {
-    private UniversityRepository universityRepository = new UniversityRepository();
+    private UniversityRepository universityRepository = UniversityRepository.getInstance();
 
     public University add(University university) {
         return universityRepository.add(university);

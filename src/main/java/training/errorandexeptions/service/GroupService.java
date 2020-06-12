@@ -6,7 +6,7 @@ import training.errorandexeptions.exception.RepositoryException;
 import training.errorandexeptions.repository.GroupRepository;
 
 public class GroupService {
-    private GroupRepository groupRepository = new GroupRepository();
+    private GroupRepository groupRepository = GroupRepository.getInstance();
 
     public Group add(Group group) {
         return groupRepository.add(group);

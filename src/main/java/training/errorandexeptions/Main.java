@@ -15,7 +15,6 @@ public class Main {
     static StudentService studentService = new StudentService();
     static SubjectService subjectService = new SubjectService();
 
-    static final int BSAA_UNIVERSITY_ID = 0;
     static final int REPIN_STUDENT_ID = 4;
     static final int ACTING_SUBJECT_ID = 1;
     static final int TWENTY_FOUR_GROUP_ID = 0;
@@ -23,7 +22,8 @@ public class Main {
     static final int DESIGN_FACULTY_ID = 1;
     static final int ECONOMIC_SUBJECT_ID = 2;
 
-    public static void main(String[] args) throws SubjectsNotFoundException, FacultiesNotFoundException, ImpossibleGradeException, RepositoryException, StudentsNotFoundException, GroupsNotFoundException {
+    public static void main(String[] args) throws SubjectsNotFoundException, FacultiesNotFoundException,
+            ImpossibleGradeException, RepositoryException, StudentsNotFoundException, GroupsNotFoundException {
         initSubjects();
         University bsaa = initBsaaUniversity();
 
@@ -33,46 +33,7 @@ public class Main {
 
         System.out.println("Average mark in Design at Design faculty is " + getStudentAverageMarkByFacultyId(DESIGN_FACULTY_ID, DESIGN_SUBJECT_ID));
 
-        System.out.println("Average mark in Economic is " + getSubjectAverageMarkByUniversityId(BSAA_UNIVERSITY_ID, ECONOMIC_SUBJECT_ID));
-    }
-
-    private static double getSubjectAverageMarkByUniversityId (int universityId, int subjectId) throws RepositoryException {
-        University university = universityService.getById(universityId);
-
-        List<Mark> markList = new ArrayList<>();
-        int[] studentIds = university.getStudentIds();
-        for (int id : studentIds) {
-            markList.addAll(Arrays.asList(studentService.getById(id).getMarks()));
-        }
-
-        for (int i = 0; i < markList.size(); i++) {
-            if (markList.get(i).getSubjectId() != subjectId) {
-                markList.remove(i);
-            }
-        }
-
-        return getAverageMark(markList.toArray(new Mark[0]));
-    }
-
-    private static double getStudentAverageMarkByFacultyId(int facultyId, int subjectId) throws GroupsNotFoundException, StudentsNotFoundException {
-        Group[] groups = groupService.getByFacultyId(facultyId);
-        List<Integer> groupIds = new ArrayList<>();
-        for (Group group : groups) {
-            groupIds.add(group.getId());
-        }
-
-        Student[] students = studentService.getByGroupIds(groupIds.toArray(new Integer[0]));
-        List<Mark> markList = new ArrayList<>();
-        for (Student student : students) {
-            List<Mark> marks = new ArrayList<>();
-            for (Mark mark : marks) {
-                if (mark.getSubjectId() == subjectId) {
-                    markList.add(mark);
-                }
-            }
-        }
-
-        return getAverageMark(markList.toArray(new Mark[0]));
+        System.out.println("Average mark in Economic is " + getSubjectAverageMarkByUniversityId(bsaa.getId(), ECONOMIC_SUBJECT_ID));
     }
 
     private static double getStudentAverageMark(int studentId) throws RepositoryException {
@@ -97,6 +58,46 @@ public class Main {
         return getAverageMark(markList.toArray(new Mark[0]));
     }
 
+    private static double getStudentAverageMarkByFacultyId(int facultyId, int subjectId) throws GroupsNotFoundException,
+            StudentsNotFoundException {
+        Group[] groups = groupService.getByFacultyId(facultyId);
+        List<Integer> groupIds = new ArrayList<>();
+        for (Group group : groups) {
+            groupIds.add(group.getId());
+        }
+
+        Student[] students = studentService.getByGroupIds(groupIds.toArray(new Integer[0]));
+        List<Mark> markList = new ArrayList<>();
+        for (Student student : students) {
+            List<Mark> marks = new ArrayList<>(Arrays.asList(student.getMarks()));
+            for (Mark mark : marks) {
+                if (mark.getSubjectId() == subjectId) {
+                    markList.add(mark);
+                }
+            }
+        }
+
+        return getAverageMark(markList.toArray(new Mark[0]));
+    }
+
+    private static double getSubjectAverageMarkByUniversityId(int universityId, int subjectId) throws RepositoryException {
+        University university = universityService.getById(universityId);
+
+        List<Mark> markList = new ArrayList<>();
+        int[] studentIds = university.getStudentIds();
+        for (int id : studentIds) {
+            markList.addAll(Arrays.asList(studentService.getById(id).getMarks()));
+        }
+
+        for (int i = 0; i < markList.size(); i++) {
+            if (markList.get(i).getSubjectId() != subjectId) {
+                markList.remove(i);
+            }
+        }
+
+        return getAverageMark(markList.toArray(new Mark[0]));
+    }
+
     private static double getAverageMark(Mark[] marks) {
         double average = 0;
         for (Mark mark : marks) {
@@ -106,16 +107,55 @@ public class Main {
         return average;
     }
 
-    private static University initBsaaUniversity() throws SubjectsNotFoundException, FacultiesNotFoundException, ImpossibleGradeException, RepositoryException {
-        University bsaa = universityService.add(new University("Belarusian State Academy of Arts", "Art, science and culture.", initBsaaFaculties()));
-        bsaa.addFaculties(initBsaaFaculties());
+    private static void initSubjects() {
+        subjectService.add(new Subject("Painting"));
+        subjectService.add(new Subject("Acting"));
+        subjectService.add(new Subject("Economic"));
+        subjectService.add(new Subject("Decorative art"));
+        subjectService.add(new Subject("Design"));
+        subjectService.add(new Subject("Sculpture"));
+        subjectService.add(new Subject("Psychology"));
+    }
+
+    private static University initBsaaUniversity() throws SubjectsNotFoundException, FacultiesNotFoundException,
+            ImpossibleGradeException, RepositoryException {
+        University bsaa = universityService.add(
+                new University("Belarusian State Academy of Arts", "Art, science and culture.", initBsaaFaculties()));
         bsaa.addGroups(initBsaaGroups());
-        bsaa.addSubjects(initSubjects());
         bsaa.addStudents(initBsaaStudents());
         return bsaa;
     }
 
-    private static Integer[] initBsaaStudents() throws ImpossibleGradeException, RepositoryException {
+    private static Integer[] initBsaaFaculties() throws SubjectsNotFoundException {
+        Integer[] theatreSubjectId = {
+                subjectService.getByName("Acting").getId(),
+                subjectService.getByName("Economic").getId(),
+                subjectService.getByName("Psychology").getId()
+        };
+
+        Integer[] designSubjectId = {
+                subjectService.getByName("Painting").getId(),
+                subjectService.getByName("Economic").getId(),
+                subjectService.getByName("Decorative art").getId(),
+                subjectService.getByName("Design").getId()
+        };
+
+        return new Integer[]{
+                facultyService.add(new Faculty("Theatre", theatreSubjectId)).getId(),
+                facultyService.add(new Faculty("Design", designSubjectId)).getId()
+        };
+    }
+
+    private static Integer[] initBsaaGroups() throws FacultiesNotFoundException {
+        return new Integer[]{
+                groupService.add(new Group("24", facultyService.getByName("Theatre").getId())).getId(),
+                groupService.add(new Group("26", facultyService.getByName("Theatre").getId())).getId(),
+                groupService.add(new Group("42", facultyService.getByName("Design").getId())).getId(),
+                groupService.add(new Group("45", facultyService.getByName("Design").getId())).getId(),
+        };
+    }
+
+    private static Integer[] initBsaaStudents() throws ImpossibleGradeException, RepositoryException, SubjectsNotFoundException {
         List<Integer> studentIdList = new ArrayList<>();
 
         Student hohlova = new Student("Hohlova", "Alina");
@@ -185,46 +225,5 @@ public class Main {
         studentIdList.add(studentService.add(babina).getId());
 
         return studentIdList.toArray(new Integer[0]);
-    }
-
-    private static Integer[] initSubjects() {
-        return new Integer[]{
-                subjectService.add(new Subject("Painting")).getId(),
-                subjectService.add(new Subject("Acting")).getId(),
-                subjectService.add(new Subject("Economic")).getId(),
-                subjectService.add(new Subject("Decorative art")).getId(),
-                subjectService.add(new Subject("Design")).getId(),
-                subjectService.add(new Subject("Sculpture")).getId(),
-                subjectService.add(new Subject("Psychology")).getId()
-        };
-    }
-
-    private static Integer[] initBsaaFaculties() throws SubjectsNotFoundException {
-        Integer[] theatreSubjectId = {
-                subjectService.getByName("Acting").getId(),
-                subjectService.getByName("Economic").getId(),
-                subjectService.getByName("Psychology").getId()
-        };
-
-        Integer[] designSubjectId = {
-                subjectService.getByName("Painting").getId(),
-                subjectService.getByName("Economic").getId(),
-                subjectService.getByName("Decorative art").getId(),
-                subjectService.getByName("Design").getId()
-        };
-
-        return new Integer[]{
-                facultyService.add(new Faculty("Theatre", theatreSubjectId)).getId(),
-                facultyService.add(new Faculty("Design", designSubjectId)).getId()
-        };
-    }
-
-    private static Integer[] initBsaaGroups() throws FacultiesNotFoundException {
-        return new Integer[]{
-                groupService.add(new Group("24", facultyService.getByName("Theatre").getId())).getId(),
-                groupService.add(new Group("26", facultyService.getByName("Theatre").getId())).getId(),
-                groupService.add(new Group("42", facultyService.getByName("Design").getId())).getId(),
-                groupService.add(new Group("45", facultyService.getByName("Design").getId())).getId(),
-        };
     }
 }

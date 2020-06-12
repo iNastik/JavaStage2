@@ -6,9 +6,7 @@ import training.errorandexeptions.exception.StudentsNotFoundException;
 import training.errorandexeptions.repository.StudentRepository;
 
 public class StudentService {
-    private StudentRepository studentRepository = new StudentRepository();
-    private FacultyService facultyService = new FacultyService();
-    private GroupService groupService = new GroupService();
+    private StudentRepository studentRepository = StudentRepository.getInstance();
 
     public Student add(Student student) {
         return studentRepository.add(student);

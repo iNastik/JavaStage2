@@ -1,6 +1,8 @@
 package training.errorandexeptions.entity;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class Faculty implements Entity {
     private int id;
@@ -8,9 +10,9 @@ public class Faculty implements Entity {
     private Set<Integer> subjectIdSet;
 
     public Faculty(String name, Integer... subjectIds) {
-        addSubjects(subjectIds);
         this.name = name;
         this.subjectIdSet = new HashSet<>();
+        addSubjects(subjectIds);
     }
 
     public String getName() {
@@ -29,7 +31,7 @@ public class Faculty implements Entity {
     }
 
     public int[] getSubjectIds() {
-        int [] subjectIds = new int [subjectIdSet.size()];
+        int[] subjectIds = new int[subjectIdSet.size()];
         Integer[] idsFromSet = subjectIdSet.toArray(new Integer[0]);
 
         for (int i = 0; i < subjectIds.length; i++) {

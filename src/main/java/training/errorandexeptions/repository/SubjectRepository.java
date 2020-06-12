@@ -8,9 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubjectRepository extends Repository {
+    private static SubjectRepository instance;
 
-    public SubjectRepository() {
+    private SubjectRepository() {
         entityList = new ArrayList<>();
+    }
+
+    public static SubjectRepository getInstance() {
+        if (instance == null) {
+            instance = new SubjectRepository();
+        }
+        return instance;
     }
 
     public Subject add(Subject subject) throws IllegalArgumentException {

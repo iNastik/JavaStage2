@@ -1,7 +1,7 @@
 package training.errorandexeptions.exception;
 
-public class RepositoryException extends Exception{
-    String message;
+public class RepositoryException extends Exception {
+    private String message;
 
     public RepositoryException(String str) {
         message = str;

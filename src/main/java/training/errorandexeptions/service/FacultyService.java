@@ -7,7 +7,7 @@ import training.errorandexeptions.exception.RepositoryException;
 import training.errorandexeptions.repository.FacultyRepository;
 
 public class FacultyService {
-    private FacultyRepository facultyRepository = new FacultyRepository();
+    private FacultyRepository facultyRepository = FacultyRepository.getInstance();
     private UniversityService universityService = new UniversityService();
 
     public Faculty add(Faculty faculty) {

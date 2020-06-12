@@ -1,7 +1,7 @@
 package training.errorandexeptions.exception;
 
 public class ImpossibleGradeException extends Exception {
-    String message;
+    private String message;
 
     public ImpossibleGradeException(String str) {
         message = str;

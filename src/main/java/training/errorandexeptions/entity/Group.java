@@ -36,7 +36,6 @@ public class Group implements Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Group group = (Group) o;
         return id == group.id &&
                 facultyId == group.facultyId &&

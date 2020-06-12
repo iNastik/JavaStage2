@@ -66,23 +66,25 @@ public class Student implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(name, student.name) &&
+        return id == student.id &&
+                groupId == student.groupId &&
+                Objects.equals(name, student.name) &&
                 Objects.equals(surname, student.surname) &&
-                Objects.equals(groupId, student.groupId) &&
                 Objects.equals(markList, student.markList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, groupId, markList);
+        return Objects.hash(id, name, surname, groupId, markList);
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", groupName='" + groupId + '\'' +
+                ", groupId=" + groupId +
                 ", markList=" + markList +
                 '}';
     }

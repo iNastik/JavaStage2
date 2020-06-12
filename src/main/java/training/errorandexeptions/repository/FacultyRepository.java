@@ -9,8 +9,17 @@ import java.util.List;
 
 public class FacultyRepository extends Repository {
 
-    public FacultyRepository() {
+    private static FacultyRepository instance;
+
+    private FacultyRepository() {
         entityList = new ArrayList<>();
+    }
+
+    public static FacultyRepository getInstance() {
+        if (instance == null) {
+            instance = new FacultyRepository();
+        }
+        return instance;
     }
 
     public Faculty add(Faculty faculty) throws IllegalArgumentException {
