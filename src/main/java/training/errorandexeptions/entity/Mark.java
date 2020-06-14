@@ -1,12 +1,18 @@
 package training.errorandexeptions.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import training.errorandexeptions.exception.ImpossibleGradeException;
 import training.errorandexeptions.exception.RepositoryException;
 import training.errorandexeptions.exception.SubjectsNotFoundException;
 import training.errorandexeptions.service.SubjectService;
 
-import java.util.Objects;
-
+@EqualsAndHashCode
+@ToString
+@Setter
+@Getter
 public class Mark {
     private int grade;
     private int subjectId;
@@ -26,43 +32,5 @@ public class Mark {
 
         this.grade = grade;
         this.subjectId = subjectId;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
-    public int getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Mark mark = (Mark) o;
-        return grade == mark.grade &&
-                subjectId == mark.subjectId;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(grade, subjectId);
-    }
-
-    @Override
-    public String toString() {
-        return "Mark{" +
-                "grade=" + grade +
-                ", subjectId=" + subjectId +
-                '}';
     }
 }

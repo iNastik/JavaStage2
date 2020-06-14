@@ -14,5 +14,4 @@ public class UniversityService {
     public University getById(int universityId) throws RepositoryException {
         return universityRepository.getById(universityId);
     }
-
 }

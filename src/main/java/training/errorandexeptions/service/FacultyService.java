@@ -20,7 +20,6 @@ public class FacultyService {
 
     public Faculty[] getByUniversityId(int universityId) throws RepositoryException, FacultiesNotFoundException {
         University university = universityService.getById(universityId);
-
         Faculty[] faculties = facultyRepository.getByIds(university.getFacultyIds());
 
         if (faculties == null) {

@@ -1,12 +1,24 @@
 package training.errorandexeptions.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
+@EqualsAndHashCode
+@ToString
 public class University implements Entity {
+    @Setter
+    @Getter
     private int id;
+    @Setter
+    @Getter
     private String name;
+    @Setter
+    @Getter
     private String info;
     private Set<Integer> studentIdSet;
     private Set<Integer> facultyIdSet;
@@ -86,60 +98,6 @@ public class University implements Entity {
         for (int id : groupIds) {
             groupIdSet.remove(id);
         }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        University that = (University) o;
-        return id == that.id &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(info, that.info) &&
-                Objects.equals(studentIdSet, that.studentIdSet) &&
-                Objects.equals(facultyIdSet, that.facultyIdSet) &&
-                Objects.equals(groupIdSet, that.groupIdSet);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, info, studentIdSet, facultyIdSet, groupIdSet);
-    }
-
-    @Override
-    public String toString() {
-        return "University{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", info='" + info + '\'' +
-                ", studentIdSet=" + studentIdSet +
-                ", facultyIdSet=" + facultyIdSet +
-                ", groupIdSet=" + groupIdSet +
-                '}';
     }
 }
 

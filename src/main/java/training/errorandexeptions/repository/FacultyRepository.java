@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FacultyRepository extends Repository {
-
     private static FacultyRepository instance;
 
     private FacultyRepository() {

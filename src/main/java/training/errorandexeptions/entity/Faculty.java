@@ -1,11 +1,21 @@
 package training.errorandexeptions.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
+@EqualsAndHashCode
+@ToString
 public class Faculty implements Entity {
+    @Getter
+    @Setter
     private int id;
+    @Getter
+    @Setter
     private String name;
     private Set<Integer> subjectIdSet;
 
@@ -13,14 +23,6 @@ public class Faculty implements Entity {
         this.name = name;
         this.subjectIdSet = new HashSet<>();
         addSubjects(subjectIds);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void addSubjects(Integer... subjectIds) {
@@ -44,37 +46,5 @@ public class Faculty implements Entity {
         for (int id : subjectIds) {
             subjectIdSet.remove(id);
         }
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Faculty faculty = (Faculty) o;
-        return id == faculty.id &&
-                Objects.equals(name, faculty.name) &&
-                Objects.equals(subjectIdSet, faculty.subjectIdSet);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, subjectIdSet);
-    }
-
-    @Override
-    public String toString() {
-        return "Faculty{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", subjectIdSet=" + subjectIdSet +
-                '}';
     }
 }

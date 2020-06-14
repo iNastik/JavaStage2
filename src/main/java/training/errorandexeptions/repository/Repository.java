@@ -10,5 +10,4 @@ public abstract class Repository {
     boolean checkId(int id) {
         return id >= 0 && id < entityList.size();
     }
-
 }

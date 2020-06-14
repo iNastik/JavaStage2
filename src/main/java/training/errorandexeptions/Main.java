@@ -9,18 +9,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Main {
-    static UniversityService universityService = new UniversityService();
-    static FacultyService facultyService = new FacultyService();
-    static GroupService groupService = new GroupService();
-    static StudentService studentService = new StudentService();
-    static SubjectService subjectService = new SubjectService();
+    private static UniversityService universityService = new UniversityService();
+    private static FacultyService facultyService = new FacultyService();
+    private static GroupService groupService = new GroupService();
+    private static StudentService studentService = new StudentService();
+    private static SubjectService subjectService = new SubjectService();
 
-    static final int REPIN_STUDENT_ID = 4;
-    static final int ACTING_SUBJECT_ID = 1;
-    static final int TWENTY_FOUR_GROUP_ID = 0;
-    static final int DESIGN_SUBJECT_ID = 4;
-    static final int DESIGN_FACULTY_ID = 1;
-    static final int ECONOMIC_SUBJECT_ID = 2;
+    private static final int REPIN_STUDENT_ID = 4;
+    private static final int ACTING_SUBJECT_ID = 1;
+    private static final int TWENTY_FOUR_GROUP_ID = 0;
+    private static final int DESIGN_SUBJECT_ID = 4;
+    private static final int DESIGN_FACULTY_ID = 1;
+    private static final int ECONOMIC_SUBJECT_ID = 2;
 
     public static void main(String[] args) throws SubjectsNotFoundException, FacultiesNotFoundException,
             ImpossibleGradeException, RepositoryException, StudentsNotFoundException, GroupsNotFoundException {
@@ -28,11 +28,8 @@ public class Main {
         University bsaa = initBsaaUniversity();
 
         System.out.println("Repin average mark is " + getStudentAverageMark(REPIN_STUDENT_ID));
-
         System.out.println("Average mark in Acting in 24 group is " + getStudentAverageMarkByGroupId(TWENTY_FOUR_GROUP_ID, ACTING_SUBJECT_ID));
-
         System.out.println("Average mark in Design at Design faculty is " + getStudentAverageMarkByFacultyId(DESIGN_FACULTY_ID, DESIGN_SUBJECT_ID));
-
         System.out.println("Average mark in Economic is " + getSubjectAverageMarkByUniversityId(bsaa.getId(), ECONOMIC_SUBJECT_ID));
     }
 
