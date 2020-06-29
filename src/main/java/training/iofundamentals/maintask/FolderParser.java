@@ -1,6 +1,6 @@
 package training.iofundamentals.maintask;
 
-import java.io.File;
+import java.io.*;
 
 public class FolderParser {
     private static final String FOLDER_LEVEL = "    |";
@@ -8,32 +8,45 @@ public class FolderParser {
     private static final String POINTER = "----";
     private static final String ELEMENT_POINTER = "    Ⱶ";
     private static final String LAST_ELEMENT_POINTER = "    L";
+    private static final String REGEX = "(\\\\[^\\\\]*)$";
+    private static final String OUTPUT_FILE_NAME = "\\files_three.txt";
 
+    public void parseFolderStructure(File file) throws IOException {
+        File outputFile = new File(file.getPath().replaceAll(REGEX, "") + OUTPUT_FILE_NAME);
+        try (OutputStream outputStream = new FileOutputStream(outputFile);
+             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+             BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter)) {
 
-    public void parseFolderStructure(File file) {
-        printStructure(file, 1, 0);
+            bufferedWriter.write(file.getName() + "\n");
+            printStructure(bufferedWriter, file, 1, 0);
+        }
     }
 
-    private void printStructure(File file, int fileLevel, int stickLevel) {
+    private void printStructure(BufferedWriter bufferedWriter, File file, int fileLevel, int stickLevel) throws IOException {
         File[] files = file.listFiles();
+
+        if (files.length == 0) {
+            throw new FileNotFoundException("no files found on this path");
+        }
+
         int filesLength = files.length;
         for (int i = 0; i < filesLength; i++) {
             File currentFile = files[i];
 
             for (int j = 0; j < stickLevel; j++) {
-                System.out.print(FOLDER_DELIMITER);
+                bufferedWriter.write(FOLDER_DELIMITER);
             }
 
             int editedFolderLevel = fileLevel - stickLevel;
             for (int j = 0; j < editedFolderLevel; j++) {
                 if (j == editedFolderLevel - 1) {
                     if (i == filesLength - 1) {
-                        System.out.print(LAST_ELEMENT_POINTER);
+                        bufferedWriter.write(LAST_ELEMENT_POINTER);
                     } else {
-                        System.out.print(ELEMENT_POINTER);
+                        bufferedWriter.write(ELEMENT_POINTER);
                     }
                 } else {
-                    System.out.print(FOLDER_LEVEL);
+                    bufferedWriter.write(FOLDER_LEVEL);
                 }
             }
 
@@ -41,13 +54,14 @@ public class FolderParser {
                 if (i == filesLength - 1) {
                     stickLevel++;
                 }
-                System.out.println(POINTER + currentFile.getName());
-                printStructure(currentFile, fileLevel + 1, stickLevel);
+                bufferedWriter.write(POINTER + currentFile.getName() + "\n");
+                printStructure(bufferedWriter, currentFile, fileLevel + 1, stickLevel);
             }
 
             if (currentFile.isFile()) {
-                System.out.println(POINTER + currentFile.getName());
+                bufferedWriter.write(POINTER + currentFile.getName() + "\n");
             }
         }
     }
 }
+
