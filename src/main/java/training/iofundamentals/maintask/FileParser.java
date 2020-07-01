@@ -11,17 +11,18 @@ import java.util.regex.Pattern;
 public class FileParser {
     private static final String FOLDER_POINTER = "  |----";
     private static final String FILE_POINTER = "      ";
-    private static final String REGEX = "(^[ |]*)(\\w+)([.]\\w+$)";
+    private static final String FILE_NAME_REGEX = "(^[ |]*)(\\w+)([.]\\w+$)";
     private List<String> fileStrings = new ArrayList<>();
 
     public void readFile(File file) throws IOException {
         try (InputStream inputStream = new FileInputStream(file);
              InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
              BufferedReader bufferedReader = new BufferedReader(inputStreamReader)) {
-            String currentLine;
-            while ((currentLine = bufferedReader.readLine()) != null) {
-                fileStrings.add(currentLine);
+
+            while (bufferedReader.ready()) {
+                fileStrings.add(bufferedReader.readLine());
             }
+
             countFolders(fileStrings);
             countFiles(fileStrings);
             countAverageFilesNumberInFolder(fileStrings);
@@ -81,7 +82,7 @@ public class FileParser {
         for (String s : fileStrings) {
 
             if (s.contains(FILE_POINTER)) {
-                Pattern pattern = Pattern.compile(REGEX);
+                Pattern pattern = Pattern.compile(FILE_NAME_REGEX);
                 Matcher matcher = pattern.matcher(s);
 
                 if (matcher.find()) {
@@ -92,6 +93,6 @@ public class FileParser {
             }
         }
         averageFileNameLength = (double) totalFileNameLength / filesCount;
-        System.out.println(Precision.round(averageFileNameLength, 2));
+        System.out.println("Average length of the file name is " + Precision.round(averageFileNameLength, 2));
     }
 }

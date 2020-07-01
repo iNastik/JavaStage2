@@ -8,11 +8,11 @@ public class FolderParser {
     private static final String POINTER = "----";
     private static final String ELEMENT_POINTER = "    Ⱶ";
     private static final String LAST_ELEMENT_POINTER = "    L";
-    private static final String REGEX = "(\\\\[^\\\\]*)$";
+    private static final String LAST_FOLDER_REGEX = "(\\\\[^\\\\]*)$";
     private static final String OUTPUT_FILE_NAME = "\\files_three.txt";
 
     public void parseFolderStructure(File file) throws IOException {
-        File outputFile = new File(file.getPath().replaceAll(REGEX, "") + OUTPUT_FILE_NAME);
+        File outputFile = new File(file.getPath().replaceAll(LAST_FOLDER_REGEX, "") + OUTPUT_FILE_NAME);
         try (OutputStream outputStream = new FileOutputStream(outputFile);
              OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
              BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter)) {
@@ -40,11 +40,7 @@ public class FolderParser {
             int editedFolderLevel = fileLevel - stickLevel;
             for (int j = 0; j < editedFolderLevel; j++) {
                 if (j == editedFolderLevel - 1) {
-                    if (i == filesLength - 1) {
-                        bufferedWriter.write(LAST_ELEMENT_POINTER);
-                    } else {
-                        bufferedWriter.write(ELEMENT_POINTER);
-                    }
+                    bufferedWriter.write(i == filesLength - 1 ? LAST_ELEMENT_POINTER : ELEMENT_POINTER);
                 } else {
                     bufferedWriter.write(FOLDER_LEVEL);
                 }
@@ -64,4 +60,3 @@ public class FolderParser {
         }
     }
 }
-
