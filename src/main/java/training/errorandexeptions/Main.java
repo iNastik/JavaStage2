@@ -40,19 +40,7 @@ public class Main {
 
     private static double getStudentAverageMarkByGroupId(int groupId, int subjectId) throws StudentsNotFoundException {
         Student[] students = studentService.getByGroupId(groupId);
-        List<Mark> markList = new ArrayList<>();
-        for (Student student : students) {
-            List<Mark> marks = new ArrayList<>();
-            if (student.getGroupId() == groupId) {
-                marks.addAll(Arrays.asList(student.getMarks()));
-            }
-            for (Mark mark : marks) {
-                if (mark.getSubjectId() == subjectId) {
-                    markList.add(mark);
-                }
-            }
-        }
-        return getAverageMark(markList.toArray(new Mark[0]));
+        return getStudentsAverageMarkBySubjectId(students, subjectId);
     }
 
     private static double getStudentAverageMarkByFacultyId(int facultyId, int subjectId) throws GroupsNotFoundException,
@@ -62,18 +50,20 @@ public class Main {
         for (Group group : groups) {
             groupIds.add(group.getId());
         }
-
         Student[] students = studentService.getByGroupIds(groupIds.toArray(new Integer[0]));
+        return getStudentsAverageMarkBySubjectId(students, subjectId);
+    }
+
+    private static double getStudentsAverageMarkBySubjectId(Student[] students, int subjectId) {
         List<Mark> markList = new ArrayList<>();
         for (Student student : students) {
-            List<Mark> marks = new ArrayList<>(Arrays.asList(student.getMarks()));
+            Mark[] marks = student.getMarks();
             for (Mark mark : marks) {
                 if (mark.getSubjectId() == subjectId) {
                     markList.add(mark);
                 }
             }
         }
-
         return getAverageMark(markList.toArray(new Mark[0]));
     }
 
