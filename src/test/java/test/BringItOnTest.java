@@ -11,7 +11,7 @@ import training.webdriver.PastebinHomePage;
 
 import java.util.concurrent.TimeUnit;
 
-public class PastebinTest {
+public class BringItOnTest {
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -21,18 +21,22 @@ public class PastebinTest {
         driver.manage().window().maximize();
     }
 
-    @Test(description = "I Can Win Test")
-    public void createNewPasteHelloweb() {
-        String name = "helloweb";
-        String text = "Hello from WebDriver";
+    @Test
+    public void createNewPasteWithSyntaxHighlighting() {
+        String name = "how to gain dominance among developers";
+        String text = "git config --global user.name  \"New Sheriff in Town\"\n"
+                + "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n"
+                + "git push origin master --force";
         NewPastebinPage newPage = new PastebinHomePage(driver)
                 .openPage()
                 .addCode(text)
+                .selectSyntaxHighlightingAsBash()
                 .selectPasteExpirationAsTenMinutes()
                 .addPasteNameOrTitle(name)
                 .createNewPaste();
         Assert.assertEquals(newPage.getPasteName(), name);
-        Assert.assertEquals(newPage.getPasteText(), text);
+        Assert.assertTrue(newPage.hasBashButton());
+        Assert.assertTrue(newPage.getHighlightedText().contains(text));
     }
 
     @AfterMethod
@@ -41,4 +45,3 @@ public class PastebinTest {
         driver = null;
     }
 }
-
