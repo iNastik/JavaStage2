@@ -1,4 +1,4 @@
-package training.webdriver.pages;
+package training.webdriver.pages.pastebinpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

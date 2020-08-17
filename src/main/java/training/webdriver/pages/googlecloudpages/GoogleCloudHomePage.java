@@ -1,10 +1,11 @@
-package training.webdriver.pages;
+package training.webdriver.pages.googlecloudpages;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import training.webdriver.pages.AbstractPage;
 import training.webdriver.utilities.CustomConditions;
 
 public class GoogleCloudHomePage extends AbstractPage {

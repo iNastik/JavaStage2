@@ -1,9 +1,10 @@
-package training.webdriver.pages;
+package training.webdriver.pages.googlecloudpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import training.webdriver.pages.AbstractPage;
 import training.webdriver.utilities.CustomConditions;
 
 public class EstimatedPage extends AbstractPage {
@@ -25,7 +26,8 @@ public class EstimatedPage extends AbstractPage {
     @FindBy(xpath = "//b[contains(text(),'Total Estimated Cost')]")
     private WebElement totalEstimatedCost;
 
-    @FindBy(xpath = "//*[@id='email_quot']")
+    //    @FindBy(xpath = "//button[contains(text(),'Email Estimate')]")
+    @FindBy(xpath = "//*[@id='email_quote']")
     private WebElement emailEstimateButton;
 
     public EstimatedPage(WebDriver driver) {
@@ -63,8 +65,9 @@ public class EstimatedPage extends AbstractPage {
         return totalEstimatedCost.getText().toLowerCase();
     }
 
-    public EstimatedPage clickEmailEstimateButton() {
+    public EmailForm clickEmailEstimateButton() {
+        CustomConditions.waitForElementVisibility(emailEstimateButton, driver);
         emailEstimateButton.click();
-        return this;
+        return new EmailForm(driver);
     }
 }

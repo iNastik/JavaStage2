@@ -1,9 +1,10 @@
-package training.webdriver.pages;
+package training.webdriver.pages.pastebinpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import training.webdriver.pages.AbstractPage;
 
 public class PastebinHomePage extends AbstractPage {
     private static final String PASTEBIN_HOMEPAGE_URL = "https://pastebin.com";

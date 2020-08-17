@@ -7,8 +7,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import training.webdriver.pages.EstimatedPage;
-import training.webdriver.pages.GoogleCloudHomePage;
+import training.webdriver.pages.googlecloudpages.EstimatedPage;
+import training.webdriver.pages.googlecloudpages.GoogleCloudHomePage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +23,7 @@ public class HurtMePlentyTest {
     private final String EXPECTED_COMMITMENT_TERM = "1 Year";
     private final String EXPECTED_ESTIMATED_COST = "USD 1,082.77";
 
-    @BeforeSuite(description = "Hurt Me Plenty")
+    @BeforeSuite
     public void setupBrowser () {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
