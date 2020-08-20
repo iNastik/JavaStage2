@@ -1,12 +1,13 @@
-package training.webdriver.pages.googlecloudpages;
+package webdriver.pages.googlecloudpages;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import training.webdriver.pages.AbstractPage;
-import training.webdriver.utilities.CustomConditions;
+import webdriver.pages.AbstractPage;
+import webdriver.utilities.CustomConditions;
+import webdriver.utilities.Helpers;
 
 public class GoogleCloudHomePage extends AbstractPage {
     private static final String GOOGLE_CLOUD_URL = "https://cloud.google.com/";
@@ -34,7 +35,7 @@ public class GoogleCloudHomePage extends AbstractPage {
     }
 
     public GoogleCloudSearchPage searchForGoogleCloudPlatformPricingCalculator() {
-        searchInput.click();
+        Helpers.clickOnTheClickableElement(searchInput, driver);
         searchInput.sendKeys(SEARCH_QUERY + Keys.ENTER);
         return new GoogleCloudSearchPage(driver);
     }

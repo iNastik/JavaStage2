@@ -1,4 +1,4 @@
-package training.webdriver.utilities;
+package webdriver.utilities;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

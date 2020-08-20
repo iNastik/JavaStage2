@@ -1,10 +1,11 @@
-package training.webdriver.pages.googlecloudpages;
+package webdriver.pages.googlecloudpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import training.webdriver.pages.AbstractPage;
+import webdriver.pages.AbstractPage;
+import webdriver.utilities.Helpers;
 
 public class GoogleCloudSearchPage extends AbstractPage {
 
@@ -17,7 +18,7 @@ public class GoogleCloudSearchPage extends AbstractPage {
     }
 
     public GoogleCloudPricingCalculatorPage switchToCalculator() {
-        searchResult.click();
+        Helpers.clickOnTheClickableElement(searchResult, driver);
         return new GoogleCloudPricingCalculatorPage(driver);
     }
 }

@@ -1,10 +1,12 @@
-package training.webdriver.pages.pastebinpages;
+package webdriver.pages.pastebinpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import training.webdriver.pages.AbstractPage;
+import webdriver.pages.AbstractPage;
+import webdriver.utilities.CustomConditions;
+import webdriver.utilities.Helpers;
 
 public class PastebinHomePage extends AbstractPage {
     private static final String PASTEBIN_HOMEPAGE_URL = "https://pastebin.com";
@@ -46,14 +48,16 @@ public class PastebinHomePage extends AbstractPage {
     }
 
     public PastebinHomePage selectSyntaxHighlightingAsBash() {
-        syntaxHighlightingMenu.click();
-        syntaxHighlightingBashOption.click();
+        Helpers.selectFromTheDropdownList(syntaxHighlightingMenu, syntaxHighlightingBashOption, driver);
+//        syntaxHighlightingMenu.click();
+//        syntaxHighlightingBashOption.click();
         return this;
     }
 
     public PastebinHomePage selectPasteExpirationAsTenMinutes() {
-        pasteExpirationMenu.click();
-        pasteExpirationTenMinutesOption.click();
+        Helpers.selectFromTheDropdownList(pasteExpirationMenu,pasteExpirationTenMinutesOption,driver);
+//        pasteExpirationMenu.click();
+//        pasteExpirationTenMinutesOption.click();
         return this;
     }
 

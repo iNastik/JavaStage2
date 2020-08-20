@@ -1,18 +1,18 @@
-package training.webdriver.pages.googlecloudpages;
+package webdriver.pages.googlecloudpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import training.webdriver.pages.AbstractPage;
-import training.webdriver.utilities.CustomConditions;
-import training.webdriver.utilities.Helpers;
+import webdriver.pages.AbstractPage;
+import webdriver.utilities.CustomConditions;
+import webdriver.utilities.Helpers;
 
 public class GoogleCloudPricingCalculatorPage extends AbstractPage {
 
     private final String NUMBER_OF_INSTANCES = "4";
 
-    @FindBy(xpath = "//*[@id='cloud-site']/devsite-iframe/iframe")
+    @FindBy(xpath = "//*[@id='cloud-site']//iframe")
     private WebElement firstFrame;
 
     @FindBy(xpath = "//*[@id='myFrame']")
@@ -25,7 +25,7 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
     private WebElement numberOfInstancesInput;
 
     @FindBy(id = "input_62")
-    private WebElement whatAreTheseInstancesForField;
+    private WebElement instanceAssignmentField;
 
     @FindBy(id = "select_value_label_54")
     private WebElement operatingSystemField;
@@ -48,16 +48,16 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
     @FindBy(xpath = "//md-checkbox[@aria-label='Add GPUs']")
     private WebElement addGpusCheckbox;
 
-    @FindBy(xpath = "//*[@id='select_value_label_350']")
+    @FindBy(id = "select_value_label_350")
     private WebElement numberOfGpusField;
 
-    @FindBy(xpath = "//*[@id='select_option_357']")
+    @FindBy(id = "select_option_357")
     private WebElement numberOfGpusSingleGpuOption;
 
-    @FindBy(xpath = "//*[@id='select_354']")
+    @FindBy(id = "select_354")
     private WebElement gpuTypeField;
 
-    @FindBy(xpath = "//*[@id='select_option_364']")
+    @FindBy(id = "select_option_364")
     private WebElement requiredGpuType;
 
     @FindBy(id = "select_value_label_184")
@@ -69,16 +69,16 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
     @FindBy(id = "select_value_label_59")
     private WebElement datacenterLocationField;
 
-    @FindBy(xpath = "//*[@id='select_option_196']")
+    @FindBy(id = "select_option_196")
     private WebElement requiredDatacenterLocation;
 
     @FindBy(id = "select_value_label_60")
     private WebElement committedUsageField;
 
-    @FindBy(xpath = "//*[@id='select_option_93']/div[1]")
+    @FindBy(id = "select_option_93")
     private WebElement committedUsageOneYearOption;
 
-    @FindBy(xpath = "//*[@id='mainForm']/div[2]/div/md-card/md-card-content/div/div[1]/form/div[15]/button")
+    @FindBy(xpath = "//form[@name='ComputeEngineForm']//button[contains(text(),'Add to Estimate')]")
     private WebElement addToEstimateButton;
 
     public GoogleCloudPricingCalculatorPage(WebDriver driver) {
@@ -86,7 +86,7 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
         PageFactory.initElements(this.driver, this);
     }
 
-    public GoogleCloudPricingCalculatorPage setParameters() throws InterruptedException {
+    public GoogleCloudPricingCalculatorPage setParameters() {
         CustomConditions.switchToInnerFrame(firstFrame, secondFrame, driver);
         activateTheComputeEngineSection();
         addNumberOfInstances(NUMBER_OF_INSTANCES);
@@ -114,7 +114,7 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
     }
 
     public GoogleCloudPricingCalculatorPage setInstancesAssignment() {
-        whatAreTheseInstancesForField.clear();
+        instanceAssignmentField.clear();
         return this;
     }
 
@@ -138,7 +138,7 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
-    public GoogleCloudPricingCalculatorPage addGpus() throws InterruptedException {
+    public GoogleCloudPricingCalculatorPage addGpus() {
         Helpers.selectFromTheDropdownList(numberOfGpusField, numberOfGpusSingleGpuOption, driver);
         Helpers.selectFromTheDropdownList(gpuTypeField, requiredGpuType, driver);
         return this;
@@ -160,7 +160,7 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
     }
 
     public EstimatedPage addToEstimate() {
-        addToEstimateButton.click();
+        Helpers.clickOnTheClickableElement(addToEstimateButton, driver);
         return new EstimatedPage(driver);
     }
 }

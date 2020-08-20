@@ -1,11 +1,11 @@
-package training.webdriver.pages.googlecloudpages;
+package webdriver.pages.googlecloudpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import training.webdriver.pages.AbstractPage;
-import training.webdriver.utilities.CustomConditions;
+import webdriver.pages.AbstractPage;
+import webdriver.utilities.Helpers;
 
 public class EstimatedPage extends AbstractPage {
     @FindBy(xpath = "//div[contains(text(),'VM class:')]")
@@ -26,8 +26,7 @@ public class EstimatedPage extends AbstractPage {
     @FindBy(xpath = "//b[contains(text(),'Total Estimated Cost')]")
     private WebElement totalEstimatedCost;
 
-    //    @FindBy(xpath = "//button[contains(text(),'Email Estimate')]")
-    @FindBy(xpath = "//*[@id='email_quote']")
+    @FindBy(xpath = "//button[contains(text(),'Email Estimate')]")
     private WebElement emailEstimateButton;
 
     public EstimatedPage(WebDriver driver) {
@@ -36,38 +35,31 @@ public class EstimatedPage extends AbstractPage {
     }
 
     public String getEstimatedVirtualMachineClass() {
-        CustomConditions.waitForElementVisibility(virtualMachineClass, driver);
         return virtualMachineClass.getText().toLowerCase();
     }
 
     public String getEstimatedInstanceType() {
-        CustomConditions.waitForElementVisibility(instanceType, driver);
         return instanceType.getText().toLowerCase();
     }
 
     public String getEstimatedRegion() {
-        CustomConditions.waitForElementVisibility(region, driver);
         return region.getText().toLowerCase();
     }
 
     public String getEstimatedLocalSsd() {
-        CustomConditions.waitForElementVisibility(localSsd, driver);
         return localSsd.getText().toLowerCase();
     }
 
     public String getEstimatedCommitmentTerm() {
-        CustomConditions.waitForElementVisibility(commitmentTerm, driver);
         return commitmentTerm.getText().toLowerCase();
     }
 
     public String getTotalEstimatedCost() {
-        CustomConditions.waitForElementVisibility(totalEstimatedCost, driver);
         return totalEstimatedCost.getText().toLowerCase();
     }
 
     public EmailForm clickEmailEstimateButton() {
-        CustomConditions.waitForElementVisibility(emailEstimateButton, driver);
-        emailEstimateButton.click();
+        Helpers.clickOnTheClickableElement(emailEstimateButton, driver);
         return new EmailForm(driver);
     }
 }

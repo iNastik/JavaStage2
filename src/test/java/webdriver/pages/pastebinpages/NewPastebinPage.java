@@ -1,10 +1,10 @@
-package training.webdriver.pages.pastebinpages;
+package webdriver.pages.pastebinpages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import training.webdriver.pages.AbstractPage;
+import webdriver.pages.AbstractPage;
 
 public class NewPastebinPage extends AbstractPage {
 
