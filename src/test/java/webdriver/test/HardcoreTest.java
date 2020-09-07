@@ -19,11 +19,14 @@ public class HardcoreTest {
     private final String EXPECTED_ESTIMATED_COST = "USD 1,082.77";
 
     @BeforeTest
-    public void setupBrowser() throws InterruptedException {
+    public void setupBrowser() {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+    }
 
+    @Test
+    public void checkIfTheCurrentEstimatedCostMatchesTheCostFromEmail() throws InterruptedException {
         emailForm = new GoogleCloudHomePage(driver)
                 .openPage()
                 .searchForGoogleCloudPlatformPricingCalculator()
@@ -33,10 +36,7 @@ public class HardcoreTest {
                 .clickEmailEstimateButton()
                 .sendEmail();
         Thread.sleep(5000);
-    }
 
-    @Test
-    public void checkIfTheCurrentEstimatedCostMatchesTheCostFromEmail() throws InterruptedException {
         String totalCostFromReceivedEmail = new TenMinuteMailPage(driver)
                 .getTotalEstimatedMonthlyCostFromReceivedEmail();
         Assert.assertEquals(EXPECTED_ESTIMATED_COST, totalCostFromReceivedEmail);
@@ -45,7 +45,7 @@ public class HardcoreTest {
 
     @AfterTest
     public void closeBrowser() {
-        driver.close();
         driver.quit();
+        driver = null;
     }
 }

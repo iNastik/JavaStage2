@@ -49,7 +49,7 @@ public class BringItOnTest {
 
     @AfterTest
     public void closeBrowser() {
-        driver.close();
         driver.quit();
+        driver = null;
     }
 }

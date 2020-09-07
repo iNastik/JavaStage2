@@ -32,8 +32,8 @@ public class ICanWinTest {
 
     @AfterTest
     public void closeBrowser() {
-        driver.close();
         driver.quit();
+        driver = null;
     }
 }
 
