@@ -1,42 +1,33 @@
 package training.threads;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Parking {
-    @Getter
-    @Setter
-    private int parkingCapacity;
-    @Getter
-    @Setter
-    private int carsCounter = 0;
-    private List<Car> carList;
 
-    public Parking(int parkingCapacity) {
-        this.parkingCapacity = parkingCapacity;
-        carList = new ArrayList<>();
+    private List<Integer> storage;
+    private static final int CAPACITY = 3;
+
+    public Parking() {
+        storage = new ArrayList<>();
     }
 
-    public Car[] getCars() {
-        return carList.toArray(new Car[0]);
+    public synchronized boolean park(int carId) {
+        if (storage.size() < CAPACITY) {
+            storage.add(carId);
+            System.out.printf("Car %d parked successfully \n", carId);
+        } else {
+            return false;
+        }
+        return true;
     }
 
-    public synchronized void addCar(Car car) {
-        try {
-            if (parkingCapacity > carsCounter) {
-                carList.add(car);
-                System.out.println("car " + car.getNumber() + " arrived");
-                carsCounter++;
-            } else {
-                System.out.println("there is no free place");
-                wait(TimeUnit.MINUTES.toMinutes(2));
+    public synchronized void leave(int carNumber) {
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i) == carNumber) {
+                storage.remove(storage.get(i));
+                System.out.printf("Car %d left the parking \n", carNumber);
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
