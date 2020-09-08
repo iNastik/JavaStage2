@@ -10,8 +10,8 @@ import webdriver.pages.pastebinpages.PastebinHomePage;
 
 public class ICanWinTest {
     private WebDriver driver;
-    private final String pasteName = "helloweb";
-    private final String code = "Hello from WebDriver";
+    private final String PASTE_NAME = "helloweb";
+    private final String CODE = "Hello from WebDriver";
 
     @BeforeTest
     public void setupBrowser() {
@@ -20,14 +20,13 @@ public class ICanWinTest {
     }
 
     @Test
-    public void createNewPasteHelloweb() throws InterruptedException {
+    public void createNewPasteHelloweb() {
         NewPastebinPage newPage = new PastebinHomePage(driver)
                 .openPage()
-                .addCode(code)
+                .addCode(CODE)
                 .selectPasteExpirationAsTenMinutes()
-                .addPasteNameOrTitle(pasteName)
+                .addPasteNameOrTitle(PASTE_NAME)
                 .createNewPaste();
-        Thread.sleep(5000);
     }
 
     @AfterTest

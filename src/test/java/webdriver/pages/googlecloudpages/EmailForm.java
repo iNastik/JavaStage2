@@ -5,7 +5,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import webdriver.pages.AbstractPage;
 import webdriver.utilities.CustomConditions;
 import webdriver.utilities.Helpers;
@@ -13,7 +12,7 @@ import webdriver.utilities.Helpers;
 import java.util.ArrayList;
 
 public class EmailForm extends AbstractPage {
-    @FindBy(id = "input_419")
+    @FindBy(id = "input_439")
     private WebElement emailInput;
 
     @FindBy(xpath = "//button[contains(text(),'Send Email')]")
@@ -27,12 +26,11 @@ public class EmailForm extends AbstractPage {
 
     public EmailForm(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(this.driver, this);
     }
 
     public EmailForm sendEmail() {
         copyGeneratedEmailFromTenMinuteMailPage();
-        CustomConditions.waitForElementToBeClickable(emailInput, driver);
+        CustomConditions.waitForElementVisibility(emailInput, driver);
         emailInput.sendKeys(Keys.chord(Keys.CONTROL, "v") + Keys.ENTER);
         Helpers.clickOnTheVisibleElement(sendEmailButton, driver);
         return this;

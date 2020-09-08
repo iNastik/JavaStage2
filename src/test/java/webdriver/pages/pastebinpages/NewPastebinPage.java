@@ -3,8 +3,8 @@ package webdriver.pages.pastebinpages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import webdriver.pages.AbstractPage;
+import webdriver.utilities.CustomConditions;
 
 public class NewPastebinPage extends AbstractPage {
 
@@ -25,22 +25,20 @@ public class NewPastebinPage extends AbstractPage {
 
     public NewPastebinPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(this.driver, this);
     }
 
     public String getPasteName() {
+        CustomConditions.waitForElementVisibility(pasteName, driver);
         return pasteName.getText();
     }
 
-    public String getPasteText() {
-        return pasteTextArea.getText();
-    }
-
     public String getHighlightedText() {
+        CustomConditions.waitForElementVisibility(highlightedCode, driver);
         return highlightedCode.getText();
     }
 
     public boolean hasBashButton() {
+        CustomConditions.waitForElementVisibility(bashButton, driver);
         return bashButton.isDisplayed();
     }
 }

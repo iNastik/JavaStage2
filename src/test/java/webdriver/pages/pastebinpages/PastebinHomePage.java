@@ -3,9 +3,7 @@ package webdriver.pages.pastebinpages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import webdriver.pages.AbstractPage;
-import webdriver.utilities.CustomConditions;
 import webdriver.utilities.Helpers;
 
 public class PastebinHomePage extends AbstractPage {
@@ -34,7 +32,6 @@ public class PastebinHomePage extends AbstractPage {
 
     public PastebinHomePage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(this.driver, this);
     }
 
     public PastebinHomePage openPage() {
@@ -49,15 +46,11 @@ public class PastebinHomePage extends AbstractPage {
 
     public PastebinHomePage selectSyntaxHighlightingAsBash() {
         Helpers.selectFromTheDropdownList(syntaxHighlightingMenu, syntaxHighlightingBashOption, driver);
-//        syntaxHighlightingMenu.click();
-//        syntaxHighlightingBashOption.click();
         return this;
     }
 
     public PastebinHomePage selectPasteExpirationAsTenMinutes() {
-        Helpers.selectFromTheDropdownList(pasteExpirationMenu,pasteExpirationTenMinutesOption,driver);
-//        pasteExpirationMenu.click();
-//        pasteExpirationTenMinutesOption.click();
+        Helpers.selectFromTheDropdownList(pasteExpirationMenu, pasteExpirationTenMinutesOption, driver);
         return this;
     }
 

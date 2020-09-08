@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 public class HardcoreTest {
     private WebDriver driver;
-    private EmailForm emailForm;
 
     private final String EXPECTED_ESTIMATED_COST = "USD 1,082.77";
 
@@ -26,8 +25,8 @@ public class HardcoreTest {
     }
 
     @Test
-    public void checkIfTheCurrentEstimatedCostMatchesTheCostFromEmail() throws InterruptedException {
-        emailForm = new GoogleCloudHomePage(driver)
+    public void checkIfTheCurrentEstimatedCostMatchesTheCostFromEmail() {
+        EmailForm emailForm = new GoogleCloudHomePage(driver)
                 .openPage()
                 .searchForGoogleCloudPlatformPricingCalculator()
                 .switchToCalculator()
@@ -35,12 +34,10 @@ public class HardcoreTest {
                 .addToEstimate()
                 .clickEmailEstimateButton()
                 .sendEmail();
-        Thread.sleep(5000);
 
         String totalCostFromReceivedEmail = new TenMinuteMailPage(driver)
                 .getTotalEstimatedMonthlyCostFromReceivedEmail();
         Assert.assertEquals(EXPECTED_ESTIMATED_COST, totalCostFromReceivedEmail);
-        Thread.sleep(5000);
     }
 
     @AfterTest

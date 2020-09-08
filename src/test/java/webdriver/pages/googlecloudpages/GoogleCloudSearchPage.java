@@ -3,7 +3,6 @@ package webdriver.pages.googlecloudpages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import webdriver.pages.AbstractPage;
 import webdriver.utilities.Helpers;
 
@@ -14,7 +13,6 @@ public class GoogleCloudSearchPage extends AbstractPage {
 
     public GoogleCloudSearchPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(this.driver, this);
     }
 
     public GoogleCloudPricingCalculatorPage switchToCalculator() {

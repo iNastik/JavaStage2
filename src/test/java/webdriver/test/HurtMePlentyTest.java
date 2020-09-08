@@ -21,7 +21,7 @@ public class HurtMePlentyTest {
     private final String EXPECTED_ESTIMATED_COST = "USD 1,082.77";
 
     @BeforeTest
-    public void setupBrowser () throws InterruptedException {
+    public void setupBrowser() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
 
@@ -31,7 +31,6 @@ public class HurtMePlentyTest {
                 .switchToCalculator()
                 .setParameters()
                 .addToEstimate();
-        Thread.sleep(5000);
     }
 
     @Test

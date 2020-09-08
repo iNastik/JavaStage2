@@ -5,8 +5,8 @@ import java.util.concurrent.TimeUnit;
 public class Car extends Thread {
     private int number;
     private Parking parking;
-    private final long PARKING_WAITING_TIME = TimeUnit.SECONDS.toSeconds(5);
-    private final long PARKING_TIME = TimeUnit.SECONDS.toSeconds(2);
+    private final long PARKING_WAITING_TIME = TimeUnit.SECONDS.toMillis(3);
+    private final long PARKING_TIME = TimeUnit.SECONDS.toMillis(2);
     private long startTime;
 
     public Car(int carId, Parking parking) {

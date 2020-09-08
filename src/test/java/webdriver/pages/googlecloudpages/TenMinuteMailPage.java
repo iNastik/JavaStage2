@@ -4,7 +4,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import webdriver.pages.AbstractPage;
 import webdriver.utilities.CustomConditions;
 import webdriver.utilities.Helpers;
@@ -25,7 +24,6 @@ public class TenMinuteMailPage extends AbstractPage {
 
     public TenMinuteMailPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(this.driver, this);
     }
 
     public TenMinuteMailPage openPage() {

@@ -12,29 +12,28 @@ import webdriver.pages.pastebinpages.PastebinHomePage;
 public class BringItOnTest {
     private WebDriver driver;
     private NewPastebinPage newPage;
-    private final String pasteName = "how to gain dominance among developers";
-    private final String code = "git config --global user.name  \"New Sheriff in Town\"\n"
+    private final String PASTE_NAME = "how to gain dominance among developers";
+    private final String CODE = "git config --global user.name  \"New Sheriff in Town\"\n"
             + "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n"
             + "git push origin master --force";
 
     @BeforeTest
-    public void setupBrowser() throws InterruptedException {
+    public void setupBrowser() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
 
         newPage = new PastebinHomePage(driver)
                 .openPage()
-                .addCode(code)
+                .addCode(CODE)
                 .selectSyntaxHighlightingAsBash()
                 .selectPasteExpirationAsTenMinutes()
-                .addPasteNameOrTitle(pasteName)
+                .addPasteNameOrTitle(PASTE_NAME)
                 .createNewPaste();
-        Thread.sleep(5000);
     }
 
     @Test
     public void checkIfReceivedTitleMatchesPasteName() {
-        Assert.assertEquals(newPage.getPasteName(), pasteName);
+        Assert.assertEquals(newPage.getPasteName(), PASTE_NAME);
     }
 
     @Test
@@ -44,7 +43,7 @@ public class BringItOnTest {
 
     @Test
     public void checkIfReceivedTextMatchesCode() {
-        Assert.assertTrue(newPage.getHighlightedText().contains(code));
+        Assert.assertTrue(newPage.getHighlightedText().contains(CODE));
     }
 
     @AfterTest

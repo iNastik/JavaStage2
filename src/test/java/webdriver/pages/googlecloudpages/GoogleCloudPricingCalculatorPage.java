@@ -3,7 +3,6 @@ package webdriver.pages.googlecloudpages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import webdriver.pages.AbstractPage;
 import webdriver.utilities.CustomConditions;
 import webdriver.utilities.Helpers;
@@ -21,58 +20,58 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
     @FindBy(xpath = "//md-tab-item//div[text()='Compute Engine']")
     private WebElement computeEngineIcon;
 
-    @FindBy(id = "input_61")
+    @FindBy(id = "input_60")
     private WebElement numberOfInstancesInput;
 
-    @FindBy(id = "input_62")
+    @FindBy(id = "input_61")
     private WebElement instanceAssignmentField;
 
-    @FindBy(id = "select_value_label_54")
+    @FindBy(id = "select_value_label_53")
     private WebElement operatingSystemField;
 
-    @FindBy(id = "select_option_63")
+    @FindBy(id = "select_option_62")
     private WebElement freeOperatingSystemOrSoftwareOption;
 
-    @FindBy(id = "select_value_label_55")
+    @FindBy(id = "select_value_label_54")
     private WebElement machineClassField;
 
     @FindBy(id = "select_option_75")
     private WebElement machineClassRegularOption;
 
-    @FindBy(id = "select_value_label_58")
+    @FindBy(id = "select_value_label_57")
     private WebElement machineTypeField;
 
-    @FindBy(id = "select_option_228")
+    @FindBy(id = "select_option_236")
     private WebElement machineTypeOption;
 
     @FindBy(xpath = "//md-checkbox[@aria-label='Add GPUs']")
     private WebElement addGpusCheckbox;
 
-    @FindBy(id = "select_value_label_350")
+    @FindBy(id = "select_value_label_370")
     private WebElement numberOfGpusField;
 
-    @FindBy(id = "select_option_357")
+    @FindBy(id = "select_option_377")
     private WebElement numberOfGpusSingleGpuOption;
 
-    @FindBy(id = "select_354")
+    @FindBy(id = "select_value_label_371")
     private WebElement gpuTypeField;
 
-    @FindBy(id = "select_option_364")
+    @FindBy(id = "select_option_384")
     private WebElement requiredGpuType;
 
-    @FindBy(id = "select_value_label_184")
+    @FindBy(id = "select_value_label_192")
     private WebElement localSsdField;
 
-    @FindBy(id = "select_option_249")
+    @FindBy(id = "select_option_257")
     private WebElement requiredLocalSsd;
 
-    @FindBy(id = "select_value_label_59")
+    @FindBy(id = "select_value_label_58")
     private WebElement datacenterLocationField;
 
-    @FindBy(id = "select_option_196")
+    @FindBy(id = "select_option_204")
     private WebElement requiredDatacenterLocation;
 
-    @FindBy(id = "select_value_label_60")
+    @FindBy(id = "select_value_label_59")
     private WebElement committedUsageField;
 
     @FindBy(id = "select_option_93")
@@ -83,7 +82,6 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage {
 
     public GoogleCloudPricingCalculatorPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(this.driver, this);
     }
 
     public GoogleCloudPricingCalculatorPage setParameters() {
